@@ -3,6 +3,8 @@
     "dev": "nodemon app.ts"
   },
   "dependencies": {
+    "@aws-sdk/client-textract": "^3.496.0",
+    "@aws-sdk/credential-providers": "^3.496.0",
     "express": "^4.18.2"
   },
   "devDependencies": {
