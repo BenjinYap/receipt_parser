@@ -1,4 +1,4 @@
-import {AppShell, Group, Title} from "@mantine/core";
+import {AppShell, Box, Group, Title} from "@mantine/core";
 import {Outlet} from "react-router-dom";
 import {IconReceipt} from "@tabler/icons-react";
 
@@ -17,7 +17,11 @@ const Layout = () => {
         </Group>
       </AppShell.Header>
       <AppShell.Main>
-        <Outlet/>
+        <Box
+          p="md"
+        >
+          <Outlet/>
+        </Box>
       </AppShell.Main>
     </AppShell>
   );
