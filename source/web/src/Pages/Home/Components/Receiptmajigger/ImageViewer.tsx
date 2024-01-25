@@ -42,6 +42,7 @@ const ImageViewer = (props: ImageViewerProps) => {
       >
         {props.images.map((image: UploadedImage) => (
           <ImageThumbnail
+            isActive={image === props.activeImage}
             key={image.id}
             maxSize={MAX_SIZE}
             image={image}
