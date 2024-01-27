@@ -1,12 +1,11 @@
 import {Dropzone, IMAGE_MIME_TYPE} from "@mantine/dropzone";
 import {Flex, Group, Image, Paper, rem, Text} from "@mantine/core";
 import {IconPhoto, IconPhotoPlus, IconUpload, IconX} from "@tabler/icons-react";
-import {useListState} from "@mantine/hooks";
+import {useElementSize, useListState} from "@mantine/hooks";
 import {UploadedImage} from "./Receiptmajigger.tsx";
 import ImageThumbnail from "./ImageThumbnail.tsx";
 
 type ImageViewerProps = {
-  activeImage: UploadedImage | undefined | null,
   images: Array<UploadedImage>,
   onDrop: (files: Array<File>) => void,
   onDelete: () => void,
@@ -14,6 +13,9 @@ type ImageViewerProps = {
 };
 
 const ImageViewer = (props: ImageViewerProps) => {
+  const {ref, width, height} = useElementSize();
+  const activeImage: UploadedImage | undefined | null = props.images.find((a: UploadedImage) => a.isActive);
+
   const MAX_SIZE = 100;
 
   return (
@@ -23,12 +25,16 @@ const ImageViewer = (props: ImageViewerProps) => {
       direction={{base: 'column', xs: 'row'}}
     >
       <Paper withBorder>
-        {props.activeImage ? (
-          <Image
-            src={props.activeImage.previewUrl}
-            //feels wrong to revoke the url in this child component
-            // onLoad={() => URL.revokeObjectURL(props.activeImage.previewUrl)}
-          />
+        {activeImage ? (
+          <>
+            <Image
+              ref={ref}
+              src={activeImage.previewUrl}
+              //feels wrong to revoke the url in this child component
+              // onLoad={() => URL.revokeObjectURL(activeImage.previewUrl)}
+            />
+            {activeImage.textractData ? <h1>awd</h1> : null}
+          </>
         ) : (
           <h1>awd</h1>
         )}
@@ -42,7 +48,7 @@ const ImageViewer = (props: ImageViewerProps) => {
       >
         {props.images.map((image: UploadedImage) => (
           <ImageThumbnail
-            isActive={image === props.activeImage}
+            isActive={image === activeImage}
             key={image.id}
             maxSize={MAX_SIZE}
             image={image}

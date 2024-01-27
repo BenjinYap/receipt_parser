@@ -1,57 +1,90 @@
 import ImageViewer from "./ImageViewer.tsx";
-import {useListState} from "@mantine/hooks";
-import {useState} from "react";
+import {useListState, usePrevious} from "@mantine/hooks";
+import {useEffect, useState} from "react";
 import MockReceiptApi from "../../Api/MockReceiptApi.ts";
 
 const receiptApi = new MockReceiptApi();
 
 export type UploadedImage = {
   id: string,
+  isActive: boolean,
   previewUrl: string,
   textracting: boolean,
   textractData: any,
 };
 
 const Receiptmajigger = () => {
-  //undefined means nothing uploaded yet, null means current image is not working for any reason
-  const [activeImage, setActiveImage] = useState<UploadedImage | undefined | null>(undefined);
   const [uploadedImages, uploadedImagesHandler] = useListState<UploadedImage>([]);
+  const previousUploadedImages = usePrevious(uploadedImages);
+
+  const updateActiveImage = (activeIndex: number): void => {
+    //set the currently active one to false and the new index to true
+    //this should only result in 2 state calls which should be better than doing a one liner
+    for (let i: number = 0; i < uploadedImages.length; i++) {
+      if (uploadedImages[i].isActive && i !== activeIndex) {
+        uploadedImagesHandler.setItemProp(i, 'isActive', false);
+      } else if (i === activeIndex) {
+        uploadedImagesHandler.setItemProp(i, 'isActive', true);
+      }
+    }
+  };
 
   const handleDrop = (files: Array<File>) => {
     const toAdd: Array<UploadedImage> = [];
+    const currentImageCount = uploadedImages.length;
 
-    for (const file: File of files) {
+    for (let i: number = 0; i < files.length; i++) {
       toAdd.push({
         //todo should add duplicate id check
         id: Math.random().toFixed(20).replace('0.', ''),
-        previewUrl: URL.createObjectURL(file),
-        textracting: false,
+        isActive: false,
+        previewUrl: URL.createObjectURL(files[i]),
+        textracting: true,
         textractData: undefined,
       });
 
-      receiptApi.uploadReceipt(file).then((resp) => {
-        console.log(resp);
+      //upload the image to the OCR api then save the resulting data
+      receiptApi.uploadReceipt(files[i]).then((resp) => {
+        uploadedImagesHandler.setItemProp(i + currentImageCount, 'textracting', false);
+
+        if (resp.success) {
+          uploadedImagesHandler.setItemProp(i + currentImageCount, 'textractData', resp.data);
+        }
       });
     }
 
-    setActiveImage(toAdd[0]);
+    //set all existing images to inactive
+    uploadedImagesHandler.apply((image: UploadedImage) => {
+      image.isActive = false;
+      return image;
+    });
+    //set the first of the newly uploaded image to be active
+    toAdd[0].isActive = true;
     uploadedImagesHandler.append(...toAdd);
   };
 
   const handleThumbnailClick = (id: string) => {
-    //todo should switch to a map of ids instead of just looping and checking
-    const result: UploadedImage | undefined = uploadedImages.find((image: UploadedImage) => image.id === id);
-    setActiveImage(result === undefined ? null : result);
+    updateActiveImage(uploadedImages.findIndex((image: UploadedImage) => image.id === id));
   };
 
+  useEffect(() => {
+    if (uploadedImages.length > previousUploadedImages) {
+      updateActiveImage(uploadedImages.length - 1);
+    } else if (uploadedImages.length < previousUploadedImages) {
+      //todo deal with deleting images later
+    }
+  }, [uploadedImages]);
+
   return (
-    <ImageViewer
-      activeImage={activeImage}
-      images={uploadedImages}
-      onDrop={handleDrop}
-      onDelete={() => console.log(1)}
-      onThumbnailClick={handleThumbnailClick}
-    />
+    <>
+      <button onClick={() => console.log(uploadedImages)}>awd</button>
+      <ImageViewer
+        images={uploadedImages}
+        onDrop={handleDrop}
+        onDelete={() => console.log(1)}
+        onThumbnailClick={handleThumbnailClick}
+      />
+    </>
   );
 };
 

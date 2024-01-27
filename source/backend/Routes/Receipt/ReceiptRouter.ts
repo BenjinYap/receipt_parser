@@ -11,7 +11,7 @@ import {fromEnv} from "@aws-sdk/credential-providers";
 import fs from "fs";
 import path from "node:path";
 
-export type TextBlock = {
+type TextBlock = {
   left: number,
   top: number,
   width: number,
