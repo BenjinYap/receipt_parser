@@ -1,6 +1,9 @@
 import ImageViewer from "./ImageViewer.tsx";
 import {useListState} from "@mantine/hooks";
 import {useState} from "react";
+import MockReceiptApi from "../../Api/MockReceiptApi.ts";
+
+const receiptApi = new MockReceiptApi();
 
 export type UploadedImage = {
   id: string,
@@ -24,6 +27,10 @@ const Receiptmajigger = () => {
         previewUrl: URL.createObjectURL(file),
         textracting: false,
         textractData: undefined,
+      });
+
+      receiptApi.uploadReceipt(file).then((resp) => {
+        console.log(resp);
       });
     }
 
