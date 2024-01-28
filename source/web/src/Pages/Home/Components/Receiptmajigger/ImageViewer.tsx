@@ -1,9 +1,10 @@
 import {Dropzone, IMAGE_MIME_TYPE} from "@mantine/dropzone";
-import {Flex, Group, Image, Paper, rem, Text} from "@mantine/core";
+import {Box, Flex, Group, Image, Paper, rem, Text} from "@mantine/core";
 import {IconPhoto, IconPhotoPlus, IconUpload, IconX} from "@tabler/icons-react";
 import {useElementSize, useListState} from "@mantine/hooks";
 import {UploadedImage} from "./Receiptmajigger.tsx";
 import ImageThumbnail from "./ImageThumbnail.tsx";
+import TextBlockOverlay from "./TextBlockOverlay.tsx";
 
 type ImageViewerProps = {
   images: Array<UploadedImage>,
@@ -26,15 +27,28 @@ const ImageViewer = (props: ImageViewerProps) => {
     >
       <Paper withBorder>
         {activeImage ? (
-          <>
+          <Box
+            pos="relative"
+          >
             <Image
               ref={ref}
               src={activeImage.previewUrl}
               //feels wrong to revoke the url in this child component
               // onLoad={() => URL.revokeObjectURL(activeImage.previewUrl)}
             />
-            {activeImage.textractData ? <h1>awd</h1> : null}
-          </>
+            {activeImage.textractData?.blocks.map((a) => (
+              <TextBlockOverlay
+                key={a.id}
+                left={a.left}
+                top={a.top}
+                width={a.width}
+                height={a.height}
+                text={a.text}
+                canvasWidth={width}
+                canvasHeight={height}
+              />
+            ))}
+          </Box>
         ) : (
           <h1>awd</h1>
         )}

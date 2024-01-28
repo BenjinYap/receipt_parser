@@ -12,6 +12,7 @@ import fs from "fs";
 import path from "node:path";
 
 type TextBlock = {
+  id: string,
   left: number,
   top: number,
   width: number,
@@ -41,6 +42,7 @@ export default class ReceiptRouter extends Api {
       }
 
       const block: TextBlock = {
+        id: textractBlock.Id ?? '',
         left: textractBlock.Geometry.BoundingBox.Left ?? -1,
         top: textractBlock.Geometry.BoundingBox.Top ?? -1,
         width: textractBlock.Geometry.BoundingBox.Width ?? -1,
