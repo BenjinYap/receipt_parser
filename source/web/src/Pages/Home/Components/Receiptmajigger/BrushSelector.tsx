@@ -1,5 +1,5 @@
 import {ExpenseCategory} from "./Receiptmajigger.tsx";
-import {Box, Divider, Flex, Group, Text, Title} from "@mantine/core";
+import {Flex, Group, Text} from "@mantine/core";
 import classes from './BrushSelector.module.css';
 import globalClasses from '../../../../App.module.css';
 

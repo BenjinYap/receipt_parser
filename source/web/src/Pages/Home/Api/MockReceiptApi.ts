@@ -7,7 +7,7 @@ export default class MockReceiptApi extends Api implements ReceiptApiInterface {
     const formData = new FormData();
     formData.append('file', file);
 
-    const resp = await this.post('/api/receipt/parse', {
+    const resp = await this.post('/api/receipt/parse?mock=1', {
       // this is to cancel out the default json content-type header
       headers: {},
     }, formData);

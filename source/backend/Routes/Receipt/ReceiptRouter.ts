@@ -56,28 +56,33 @@ export default class ReceiptRouter extends Api {
   }
 
   private parse = async (req: Request, res: Response): Promise<any> => {
-    // if (req.file === undefined) {
-    //   res.json(this.buildErrorResponse('upload_failed', {}));
-    // } else {
-    // const client: TextractClient = new TextractClient({
-    //   region: 'us-east-1',
-    //   credentials: fromEnv(),
-    // });
-    // const input: AnalyzeDocumentRequest = { // AnalyzeDocumentRequest
-    //   Document: { // Document
-    //     Bytes: req.file.buffer,
-    //   },
-    //   FeatureTypes: [ // FeatureTypes // required
-    //     "SIGNATURES",
-    //   ],
-    // };
-    // const command: AnalyzeDocumentCommand = new AnalyzeDocumentCommand(input);
-    // const resp: AnalyzeDocumentCommandOutput = await client.send(command);
-    // fs.writeFileSync(path.resolve(__dirname, 'hello.txt'), JSON.stringify(resp));
-    const resp = JSON.parse(fs.readFileSync(path.resolve(__dirname, 'hello.txt'), 'utf-8'));
-    const blocks = this.parseTextractResponse(resp);
-    res.json(this.buildSuccessResponse({blocks: blocks}));
-    // }
+    if (req.query.mock) {
+      const resp = JSON.parse(fs.readFileSync(path.resolve(__dirname, 'hello.txt'), 'utf-8'));
+      const blocks = this.parseTextractResponse(resp);
+      res.json(this.buildSuccessResponse({blocks: blocks}));
+    } else {
+      if (req.file === undefined) {
+        res.json(this.buildErrorResponse('upload_failed', {}));
+      } else {
+        const client: TextractClient = new TextractClient({
+          region: 'us-east-1',
+          credentials: fromEnv(),
+        });
+        const input: AnalyzeDocumentRequest = { // AnalyzeDocumentRequest
+          Document: { // Document
+            Bytes: req.file.buffer,
+          },
+          FeatureTypes: [ // FeatureTypes // required
+            "SIGNATURES",
+          ],
+        };
+        const command: AnalyzeDocumentCommand = new AnalyzeDocumentCommand(input);
+        const resp: AnalyzeDocumentCommandOutput = await client.send(command);
+        // fs.writeFileSync(path.resolve(__dirname, 'hello.txt'), JSON.stringify(resp));
+        const blocks = this.parseTextractResponse(resp);
+        res.json(this.buildSuccessResponse({blocks: blocks}));
+      }
+    }
   }
 
   public getRouter(): Router {
