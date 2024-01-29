@@ -1,7 +1,19 @@
-.textblockOverlay {
+.overlay {
   cursor: pointer;
-  border: 1px solid black;
-  background: rgba(0, 0, 0, 0.2);
+  border-width: 1px;
+  border-style:solid;
   position: absolute;
   content: '';
+}
+
+.overlayDefault {
+  border-color: var(--mantine-color-gray-outline);
+
+  @mixin hover {
+    background: var(--mantine-color-gray-filled-hover);
+  }
+}
+
+.overlayDefaultActive {
+  background: var(--mantine-color-gray-filled);
 }

@@ -18,13 +18,18 @@ const ParsedExpenseOverlay = (props: ParsedExpenseOverlayProps) => {
   if (props.expenseCategoryId) {
     //figure out the class names based on the category color id
     overlayClass = `overlay${props.expenseCategoryId}`;
-    overlayClassActive = `${overlayClass}Active`;
+    overlayClassActive = globalClasses[`${overlayClass}Active`];
+    overlayClass = globalClasses[overlayClass];
+  } else {
+    //otherwise use the default style
+    overlayClass = classes.overlayDefault;
+    overlayClassActive = classes.overlayDefaultActive;
   }
 
   return (
     <Box
       opacity={0.6}
-      className={`${classes.textblockOverlay} ${globalClasses[overlayClass]} ${globalClasses[overlayClassActive]}`}
+      className={`${classes.overlay} ${overlayClass} ${overlayClassActive}`}
       left={props.canvasWidth * props.parsedExpense.left}
       top={props.canvasHeight * props.parsedExpense.top}
       w={props.canvasWidth * props.parsedExpense.width}
