@@ -20,9 +20,10 @@ export type UploadedImage = {
   parsedExpenses: Array<ParsedExpense>,
 };
 
-type ExpenseCategory = {
+export type ExpenseCategory = {
   id: number,
   name: string,
+  color: string,
 };
 
 type TrackedExpense = {
@@ -32,14 +33,16 @@ type TrackedExpense = {
 
 const Receiptmajigger = () => {
   const DEFAULT_EXPENSE_CATEGORIES = [
-    {id: 1, name: 'Snacks'},
-    {id: 2, name: 'Eating out'},
-    {id: 3, name: 'Groceries'},
+    {id: 1, name: 'Snacks', color: 'red'},
+    {id: 2, name: 'Eating out', color: 'green'},
+    {id: 3, name: 'Groceries', color: 'blue'},
   ];
 
   const [expenseCategories, expenseCategoriesHandler] = useListState<ExpenseCategory>(DEFAULT_EXPENSE_CATEGORIES);
   const [uploadedImages, uploadedImagesHandler] = useListState<UploadedImage>([]);
   const previousUploadedImages = usePrevious(uploadedImages);
+  const [parsedExpenses, parsedExpensesHandler] = useListState<ParsedExpense>([]);  //all parsed expenses across all images
+  const [trackedExpenses, setTrackedExpenses] = useState<Record<string, number>>({});  //all tracked expenses across all images
 
   const updateActiveImage = (activeIndex: number): void => {
     //set the currently active one to false and the new index to true
@@ -73,8 +76,11 @@ const Receiptmajigger = () => {
         uploadedImagesHandler.setItemProp(i + currentImageCount, 'textracting', false);
 
         if (resp.success) {
+          //save the data to this image specifically
           uploadedImagesHandler.setItemProp(i + currentImageCount, 'textractData', resp.data);
           uploadedImagesHandler.setItemProp(i + currentImageCount, 'parsedExpenses', resp.data.blocks);
+          //add the parsed expenses to the global list of parsed expenses
+          parsedExpensesHandler.append(...resp.data.blocks);
         }
       });
     }
@@ -119,7 +125,9 @@ const Receiptmajigger = () => {
           onThumbnailClick={handleThumbnailClick}
         />
         <Stack>
-          <BrushSelector/>
+          <BrushSelector
+            categories={expenseCategories}
+          />
           <ExpenseSummary/>
         </Stack>
       </Flex>

@@ -1,0 +1,14 @@
+.categoryContainer {
+  border-width: 1px;
+  border-style: solid;
+  cursor: pointer;
+}
+
+.categoryIcon {
+  width: 10px;
+  height: 10px;
+  background: red;
+}
+
+.categoryText {
+}
