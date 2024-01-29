@@ -1,11 +1,11 @@
 .row1 {
-  background: var(--mantine-color-red-light);
+  background: var(--mantine-color-red-light) !important;
 }
 
 .row2 {
-  background: var(--mantine-color-green-light);
+  background: var(--mantine-color-green-light) !important;;
 }
 
 .row3 {
-  background: var(--mantine-color-blue-light);
+  background: var(--mantine-color-blue-light) !important;;
 }
