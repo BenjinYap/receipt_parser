@@ -75,8 +75,8 @@ const Receiptmajigger = () => {
       return;
     }
 
-    //if already tracked, then remove
-    if (id in trackedExpenses) {
+    //if already tracked with the same category brush, then remove
+    if (id in trackedExpenses && trackedExpenses[id] === activeExpenseCategoryId) {
       const copy = {...trackedExpenses};
       delete copy[id];
       setTrackedExpenses(copy);
