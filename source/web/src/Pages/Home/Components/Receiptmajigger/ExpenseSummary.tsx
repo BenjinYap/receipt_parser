@@ -1,7 +1,12 @@
-import {Checkbox, Divider, NumberInput, Stack, Table, TableData} from "@mantine/core";
+import {Checkbox, Divider, NumberInput, Stack, Table} from "@mantine/core";
 import {useState} from "react";
+import classes from './ExpenseSummary.module.css';
 
-export type ExpenseSummaryDataRow = [string, string];
+export type ExpenseSummaryDataRow = {
+  categoryId: number,
+  categoryName: string,
+  amount: number,
+};
 
 type ExpenseSummaryProps = {
   data: Array<ExpenseSummaryDataRow>,
@@ -16,18 +21,15 @@ const ExpenseSummary = (props: ExpenseSummaryProps) => {
 
     //handle tax addition
     if (includeTax) {
-      copy = copy.map((a) => [a[0], String(Number(Number(a[1]) * (1 + taxAmount / 100)).toFixed(2))]);
+      copy = copy.map((a) => {
+        return {
+          ...a,
+          amount: Number((a.amount * (1 + taxAmount / 100)).toFixed(2)),
+        };
+      });
     }
 
-    //add dollar sign
-    copy = copy.map((a) => [a[0], `$${a[1]}`]);
     return copy;
-  };
-
-
-  const tableData: TableData = {
-    head: ['Category', 'Total'],
-    body: calculateFinalAmounts(),
   };
 
   return (
@@ -50,9 +52,27 @@ const ExpenseSummary = (props: ExpenseSummaryProps) => {
         suffix="%"
         disabled={!includeTax}
       />
-      <Table
-        data={tableData}
-      />
+      <Table>
+        <Table.Thead>
+          <Table.Tr>
+            <Table.Th>Category</Table.Th>
+            <Table.Th>Total</Table.Th>
+          </Table.Tr>
+        </Table.Thead>
+        <Table.Tbody>
+          {calculateFinalAmounts().map((a: ExpenseSummaryDataRow) => {
+            return (
+              <Table.Tr
+                key={a.categoryId}
+                className={classes[`row${a.categoryId}`]}
+              >
+                <Table.Td>{a.categoryName}</Table.Td>
+                <Table.Td>{`$${a.amount}`}</Table.Td>
+              </Table.Tr>
+            );
+          })}
+        </Table.Tbody>
+      </Table>
     </Stack>
   );
 }

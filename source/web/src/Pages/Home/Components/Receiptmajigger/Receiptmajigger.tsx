@@ -42,7 +42,7 @@ const Receiptmajigger = () => {
   const [trackedExpenses, setTrackedExpenses] = useState<Record<string, number>>({});  //all tracked expenses across all images
 
   const summarizeTrackedExpenses = (): Array<ExpenseSummaryDataRow> => {
-    const categorySummaryMap: Record<string, number> = {};
+    const categorySummaryMap: Record<number, { categoryName: string, amount: number }> = {};
 
     for (const expenseId in trackedExpenses) {
       const expense = parsedExpenses.find((a: ParsedExpense) => a.id === expenseId);
@@ -54,17 +54,27 @@ const Receiptmajigger = () => {
       }
 
       // noinspection PointlessBooleanExpressionJS
-      if (category.name in categorySummaryMap === false) {
-        categorySummaryMap[category.name] = 0;
+      if (category.id in categorySummaryMap === false) {
+        categorySummaryMap[category.id] = {
+          categoryName: category.name,
+          amount: 0,
+        };
       }
 
-      categorySummaryMap[category.name] += Number(expense.text.replace('$', ''));
+      categorySummaryMap[category.id] = {
+        ...categorySummaryMap[category.id],
+        amount: categorySummaryMap[category.id].amount + Number(expense.text.replace('$', '')),
+      };
     }
 
     const data: Array<ExpenseSummaryDataRow> = [];
 
-    for (const category in categorySummaryMap) {
-      data.push([category, categorySummaryMap[category].toFixed(2)]);
+    for (const categoryId in categorySummaryMap) {
+      data.push({
+        categoryId: Number(categoryId),
+        categoryName: categorySummaryMap[categoryId].categoryName,
+        amount: Number(categorySummaryMap[categoryId].amount),
+      });
     }
 
     return data;
