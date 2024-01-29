@@ -47,10 +47,16 @@ const Receiptmajigger = () => {
 
 
   const handleParsedExpenseSelect = (id: string) => {
-    setTrackedExpenses({
-      ...trackedExpenses,
-      [id]: activeExpenseCategoryId,
-    });
+    if (id in trackedExpenses) {
+      const copy = {...trackedExpenses};
+      delete copy[id];
+      setTrackedExpenses(copy);
+    } else {
+      setTrackedExpenses({
+        ...trackedExpenses,
+        [id]: activeExpenseCategoryId,
+      });
+    }
   };
 
   const updateActiveImage = (activeIndex: number): void => {
