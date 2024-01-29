@@ -38,11 +38,13 @@ const Receiptmajigger = () => {
     {id: 3, name: 'Groceries', color: 'blue'},
   ];
 
+  const [activeExpenseCategoryId, setActiveExpenseCategoryId] = useState<number>(null);
   const [expenseCategories, expenseCategoriesHandler] = useListState<ExpenseCategory>(DEFAULT_EXPENSE_CATEGORIES);
   const [uploadedImages, uploadedImagesHandler] = useListState<UploadedImage>([]);
   const previousUploadedImages = usePrevious(uploadedImages);
   const [parsedExpenses, parsedExpensesHandler] = useListState<ParsedExpense>([]);  //all parsed expenses across all images
   const [trackedExpenses, setTrackedExpenses] = useState<Record<string, number>>({});  //all tracked expenses across all images
+
 
   const updateActiveImage = (activeIndex: number): void => {
     //set the currently active one to false and the new index to true
@@ -127,6 +129,8 @@ const Receiptmajigger = () => {
         <Stack>
           <BrushSelector
             categories={expenseCategories}
+            onCategorySelect={(id: number) => setActiveExpenseCategoryId(id)}
+            activeCategoryId={activeExpenseCategoryId}
           />
           <ExpenseSummary/>
         </Stack>
