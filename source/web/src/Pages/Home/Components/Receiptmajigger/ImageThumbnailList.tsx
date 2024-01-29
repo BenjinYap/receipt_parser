@@ -21,9 +21,10 @@ const ImageThumbnailList = (props: ImageThumbnailListProps) => {
     <Flex
       direction={{xs: 'column'}}
       w={{xs: 100}}
-      h={{base: 100, xs: 'auto'}}
-      gap="md"
+      h={{xs: 'auto'}}
+      gap="xs"
       justify={{base: 'center', xs: 'unset'}}
+      style={{flexWrap: 'wrap'}}
     >
       {props.images.map((image: UploadedImage) => (
         <ImageThumbnail

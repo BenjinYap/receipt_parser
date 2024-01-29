@@ -172,7 +172,7 @@ const Receiptmajigger = () => {
     <>
       <Flex
         w="100%"
-        gap="md"
+        gap="xs"
         direction={{base: 'column', xs: 'row'}}
       >
         <ImageViewer

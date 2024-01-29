@@ -1,5 +1,5 @@
 import {ExpenseCategory} from "./Receiptmajigger.tsx";
-import {Divider, Flex, Group, Text} from "@mantine/core";
+import {Divider, Flex, Group, Stack, Text} from "@mantine/core";
 import classes from './BrushSelector.module.css';
 import globalClasses from '../../../../App.module.css';
 
@@ -12,31 +12,36 @@ type BrushSelectorProps = {
 const BrushSelector = (props: BrushSelectorProps) => {
   return (
     <>
-      <Flex
-        direction={{xs: 'column'}}
+      <Stack
         gap="xs"
       >
         <Divider
           label="Category Brushes"
           labelPosition="left"
         />
-        {props.categories.map((c: ExpenseCategory) => {
-          //figure out the class names based on the category color id
-          const overlayClass: string = `overlay${c.id}`;
-          const overlayClassActive: string = c.id === props.activeCategoryId ? `${overlayClass}Active` : '';
+        <Flex
+          direction={{xs: 'column'}}
+          gap="xs"
+          style={{flexWrap: 'wrap'}}
+        >
+          {props.categories.map((c: ExpenseCategory) => {
+            //figure out the class names based on the category color id
+            const overlayClass: string = `overlay${c.id}`;
+            const overlayClassActive: string = c.id === props.activeCategoryId ? `${overlayClass}Active` : '';
 
-          return (
-            <Group
-              className={`${classes.categoryContainer} ${globalClasses[overlayClass]} ${globalClasses[overlayClassActive]}`}
-              key={c.id}
-              px="xs"
-              onClick={() => props.onCategorySelect(c.id)}
-            >
-              <Text>{c.name}</Text>
-            </Group>
-          );
-        })}
-      </Flex>
+            return (
+              <Group
+                className={`${classes.categoryContainer} ${globalClasses[overlayClass]} ${globalClasses[overlayClassActive]}`}
+                key={c.id}
+                px="xs"
+                onClick={() => props.onCategorySelect(c.id)}
+              >
+                <Text>{c.name}</Text>
+              </Group>
+            );
+          })}
+        </Flex>
+      </Stack>
     </>
   );
 }
