@@ -1,4 +1,4 @@
-import {Box} from "@mantine/core";
+import {Box, HoverCard, Stack, Text} from "@mantine/core";
 import classes from './ParsedExpenseOverlay.module.css';
 import {ParsedExpense} from "../../Api/ReceiptApiInterface.ts";
 import globalClasses from '../../../../App.module.css';
@@ -27,17 +27,38 @@ const ParsedExpenseOverlay = (props: ParsedExpenseOverlayProps) => {
   }
 
   return (
-    <Box
-      opacity={0.4}
-      className={`${classes.overlay} ${overlayClass} ${overlayClassActive}`}
-      left={props.canvasWidth * props.parsedExpense.left}
-      top={props.canvasHeight * props.parsedExpense.top}
-      w={props.canvasWidth * props.parsedExpense.width}
-      h={props.canvasHeight * props.parsedExpense.height}
-      onClick={() => props.onSelect(props.parsedExpense.id)}
+    <HoverCard
+      withArrow
+      openDelay={0}
+      closeDelay={0}
+      position="right"
+      styles={{
+        dropdown: {
+          padding: 'var(--mantine-spacing-xs)',
+        },
+      }}
     >
+      <HoverCard.Target>
+        <Box
+          opacity={0.4}
+          className={`${classes.overlay} ${overlayClass} ${overlayClassActive}`}
+          left={props.canvasWidth * props.parsedExpense.left}
+          top={props.canvasHeight * props.parsedExpense.top}
+          w={props.canvasWidth * props.parsedExpense.width}
+          h={props.canvasHeight * props.parsedExpense.height}
+          onClick={() => props.onSelect(props.parsedExpense.id)}
+        >
 
-    </Box>
+        </Box>
+      </HoverCard.Target>
+      <HoverCard.Dropdown>
+        <Stack
+          gap="xs"
+        >
+          <Text>{props.parsedExpense.text}</Text>
+        </Stack>
+      </HoverCard.Dropdown>
+    </HoverCard>
   );
 };
 
