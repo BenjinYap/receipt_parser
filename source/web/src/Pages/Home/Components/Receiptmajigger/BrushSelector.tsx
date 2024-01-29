@@ -1,5 +1,5 @@
 import {ExpenseCategory} from "./Receiptmajigger.tsx";
-import {Flex, Group, Text} from "@mantine/core";
+import {Divider, Flex, Group, Text} from "@mantine/core";
 import classes from './BrushSelector.module.css';
 import globalClasses from '../../../../App.module.css';
 
@@ -16,6 +16,10 @@ const BrushSelector = (props: BrushSelectorProps) => {
         direction={{xs: 'column'}}
         gap="xs"
       >
+        <Divider
+          label="Category Brushes"
+          labelPosition="left"
+        />
         {props.categories.map((c: ExpenseCategory) => {
           //figure out the class names based on the category color id
           const overlayClass: string = `overlay${c.id}`;

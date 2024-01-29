@@ -1,4 +1,4 @@
-import {Box, Image, Paper} from "@mantine/core";
+import {Image, Paper} from "@mantine/core";
 import {useElementSize} from "@mantine/hooks";
 import {UploadedImage} from "./Receiptmajigger.tsx";
 import ParsedExpenseOverlay from "./ParsedExpenseOverlay.tsx";

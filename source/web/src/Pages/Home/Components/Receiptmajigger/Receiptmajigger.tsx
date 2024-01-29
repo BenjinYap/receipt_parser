@@ -63,7 +63,7 @@ const Receiptmajigger = () => {
     const data: Array<ExpenseSummaryDataRow> = [];
 
     for (const category in categorySummaryMap) {
-      data.push([category, `$${categorySummaryMap[category].toFixed(2)}`]);
+      data.push([category, categorySummaryMap[category].toFixed(2)]);
     }
 
     return data;
