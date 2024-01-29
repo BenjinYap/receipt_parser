@@ -1,4 +1,4 @@
-import {Image, Paper} from "@mantine/core";
+import {Group, Image, Paper, Text} from "@mantine/core";
 import {useElementSize} from "@mantine/hooks";
 import {UploadedImage} from "./Receiptmajigger.tsx";
 import ParsedExpenseOverlay from "./ParsedExpenseOverlay.tsx";
@@ -42,8 +42,12 @@ const ImageViewer = (props: ImageViewerProps) => {
           ))}
         </>
       ) : (
-        <h1>awd</h1>
-      )}
+        <Group
+          h="100%"
+          p="xs"
+        >
+          <Text>Upload an image of a receipt to get started</Text>
+        </Group>)}
     </Paper>
 
   );
