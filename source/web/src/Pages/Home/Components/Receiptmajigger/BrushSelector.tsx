@@ -19,7 +19,7 @@ const BrushSelector = (props: BrushSelectorProps) => {
           <Group
             className={classes.categoryContainer}
             key={c.id}
-            pl="xs"
+            px="xs"
             style={{
               borderColor: `var(--mantine-color-${c.color}-outline)`
             }}

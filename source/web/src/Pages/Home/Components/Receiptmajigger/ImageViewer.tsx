@@ -1,7 +1,7 @@
 import {Box, Image, Paper} from "@mantine/core";
 import {useElementSize} from "@mantine/hooks";
 import {UploadedImage} from "./Receiptmajigger.tsx";
-import TextBlockOverlay from "./TextBlockOverlay.tsx";
+import ParsedExpenseOverlay from "./ParsedExpenseOverlay.tsx";
 import {ParsedExpense} from "../../Api/ReceiptApiInterface.ts";
 
 type ImageViewerProps = {
@@ -27,7 +27,7 @@ const ImageViewer = (props: ImageViewerProps) => {
             // onLoad={() => URL.revokeObjectURL(activeImage.previewUrl)}
           />
           {activeImage.parsedExpenses.map((a: ParsedExpense) => (
-            <TextBlockOverlay
+            <ParsedExpenseOverlay
               key={a.id}
               parsedExpense={a}
               canvasWidth={width}

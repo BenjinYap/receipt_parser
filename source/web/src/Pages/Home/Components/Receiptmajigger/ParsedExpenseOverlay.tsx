@@ -1,16 +1,14 @@
 import {Box} from "@mantine/core";
-import classes from './TextBlockOverlay.module.css';
+import classes from './ParsedExpenseOverlay.module.css';
 import {ParsedExpense} from "../../Api/ReceiptApiInterface.ts";
 
-type TextBlockOverlayProps = {
+type ParsedExpenseOverlayProps = {
   parsedExpense: ParsedExpense,
   canvasWidth: number,
   canvasHeight: number,
 };
 
-const TextBlockOverlay = (props: TextBlockOverlayProps) => {
-  console.log(props);
-
+const ParsedExpenseOverlay = (props: ParsedExpenseOverlayProps) => {
   return (
     <Box
       className={classes.textblockOverlay}
@@ -24,4 +22,4 @@ const TextBlockOverlay = (props: TextBlockOverlayProps) => {
   );
 };
 
-export default TextBlockOverlay;
+export default ParsedExpenseOverlay;
