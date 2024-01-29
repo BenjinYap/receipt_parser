@@ -2,10 +2,10 @@ import ImageViewer from "./ImageViewer.tsx";
 import {useListState, usePrevious} from "@mantine/hooks";
 import {useEffect, useState} from "react";
 import MockReceiptApi from "../../Api/MockReceiptApi.ts";
-import {Flex, Group, Stack} from "@mantine/core";
+import {Flex, Stack} from "@mantine/core";
 import ImageThumbnailList from "./ImageThumbnailList.tsx";
 import BrushSelector from "./BrushSelector.tsx";
-import ExpenseSummary from "./ExpenseSummary.tsx";
+import ExpenseSummary, {ExpenseSummaryDataRow} from "./ExpenseSummary.tsx";
 import {ParsedExpense, UploadReceiptSuccessResponse} from "../../Api/ReceiptApiInterface.ts";
 import {ErrorResponse} from "../../../../Global/Api/Api.ts";
 
@@ -26,11 +26,6 @@ export type ExpenseCategory = {
   color: string,
 };
 
-type TrackedExpense = {
-  categoryId: number,
-  expenseId: string,
-};
-
 const Receiptmajigger = () => {
   const DEFAULT_EXPENSE_CATEGORIES = [
     {id: 1, name: 'Snacks', color: 'red'},
@@ -45,13 +40,42 @@ const Receiptmajigger = () => {
   const [parsedExpenses, parsedExpensesHandler] = useListState<ParsedExpense>([]);  //all parsed expenses across all images
   const [trackedExpenses, setTrackedExpenses] = useState<Record<string, number>>({});  //all tracked expenses across all images
 
+  const summarizeTrackedExpenses = (): Array<ExpenseSummaryDataRow> => {
+    const categorySummaryMap: Record<string, number> = {};
+
+    for (const expenseId in trackedExpenses) {
+      const expense = parsedExpenses.find((a: ParsedExpense) => a.id === expenseId);
+      const category = expenseCategories.find((a: ExpenseCategory) => a.id === trackedExpenses[expenseId]);
+
+      //somehow doesn't match an expense or category, ignore this
+      if (expense === undefined || category === undefined) {
+        continue;
+      }
+
+      // noinspection PointlessBooleanExpressionJS
+      if (category.name in categorySummaryMap === false) {
+        categorySummaryMap[category.name] = 0;
+      }
+
+      categorySummaryMap[category.name] += Number(expense.text);
+    }
+
+    const data: Array<ExpenseSummaryDataRow> = [];
+
+    for (const category in categorySummaryMap) {
+      data.push([category, `$${categorySummaryMap[category].toFixed(2)}`]);
+    }
+
+    return data;
+  };
 
   const handleParsedExpenseSelect = (id: string) => {
+    //if already tracked, then remove
     if (id in trackedExpenses) {
       const copy = {...trackedExpenses};
       delete copy[id];
       setTrackedExpenses(copy);
-    } else {
+    } else {  //otherwise track it
       setTrackedExpenses({
         ...trackedExpenses,
         [id]: activeExpenseCategoryId,
@@ -115,16 +139,17 @@ const Receiptmajigger = () => {
   };
 
   useEffect(() => {
-    if (uploadedImages.length > previousUploadedImages) {
-      updateActiveImage(uploadedImages.length - 1);
-    } else if (uploadedImages.length < previousUploadedImages) {
-      //todo deal with deleting images later
+    if (previousUploadedImages) {
+      if (uploadedImages.length > previousUploadedImages.length) {
+        updateActiveImage(uploadedImages.length - 1);
+      } else if (uploadedImages.length < previousUploadedImages.length) {
+        //todo deal with deleting images later
+      }
     }
   }, [uploadedImages]);
 
   return (
     <>
-      <button onClick={() => console.log(uploadedImages)}>awd</button>
       <Flex
         w="100%"
         gap="md"
@@ -147,7 +172,9 @@ const Receiptmajigger = () => {
             onCategorySelect={(id: number) => setActiveExpenseCategoryId(id)}
             activeCategoryId={activeExpenseCategoryId}
           />
-          <ExpenseSummary/>
+          <ExpenseSummary
+            data={summarizeTrackedExpenses()}
+          />
         </Stack>
       </Flex>
     </>

@@ -1,15 +1,17 @@
 import {Table, TableData} from "@mantine/core";
 
-const ExpenseSummary = () => {
+export type ExpenseSummaryDataRow = [string, string];
+
+type ExpenseSummaryProps = {
+  data: Array<ExpenseSummaryDataRow>,
+};
+
+const ExpenseSummary = (props: ExpenseSummaryProps) => {
   const tableData: TableData = {
     head: ['Category', 'Total'],
-    body: [
-      ['Snack', '$34.55'],
-      ['Eating out', '$555.13'],
-      ['Coffee', '$8.67'],
-    ],
+    body: props.data,
   };
-
+  
   return (
     <>
       <Table
