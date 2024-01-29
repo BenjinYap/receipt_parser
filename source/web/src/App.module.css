@@ -1,0 +1,35 @@
+.overlayRed {
+  border-color: var(--mantine-color-red-outline);
+
+  @mixin hover {
+    background: var(--mantine-color-red-filled-hover);
+  }
+}
+
+.overlayRedActive {
+  background: var(--mantine-color-red-filled);
+}
+
+.overlayGreen {
+  border-color: var(--mantine-color-green-outline);
+
+  @mixin hover {
+    background: var(--mantine-color-green-filled-hover);
+  }
+}
+
+.overlayGreenActive {
+  background: var(--mantine-color-green-filled);
+}
+
+.overlayBlue {
+  border-color: var(--mantine-color-blue-outline);
+
+  @mixin hover {
+    background: var(--mantine-color-blue-filled-hover);
+  }
+}
+
+.overlayBlueActive {
+  background: var(--mantine-color-blue-filled);
+}

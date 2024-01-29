@@ -1,6 +1,7 @@
 import {ExpenseCategory} from "./Receiptmajigger.tsx";
 import {Box, Divider, Flex, Group, Text, Title} from "@mantine/core";
 import classes from './BrushSelector.module.css';
+import globalClasses from '../../../../App.module.css';
 
 type BrushSelectorProps = {
   categories: Array<ExpenseCategory>,
@@ -15,20 +16,22 @@ const BrushSelector = (props: BrushSelectorProps) => {
         direction={{xs: 'column'}}
         gap="xs"
       >
-        {props.categories.map((c: ExpenseCategory) => (
-          <Group
-            className={classes.categoryContainer}
-            key={c.id}
-            px="xs"
-            style={{
-              borderColor: `var(--mantine-color-${c.color}-outline)`
-            }}
-            bg={c.id === props.activeCategoryId ? `var(--mantine-color-${c.color}-filled)` : 'transparent'}
-            onClick={() => props.onCategorySelect(c.id)}
-          >
-            <Text>{c.name}</Text>
-          </Group>
-        ))}
+        {props.categories.map((c: ExpenseCategory) => {
+          //figure out the class names based on the category color
+          const overlayClass = `overlay${c.color.charAt(0).toUpperCase() + c.color.slice(1)}`;
+          const overlayClassActive = c.id === props.activeCategoryId ? `${overlayClass}Active` : '';
+
+          return (
+            <Group
+              className={`${classes.categoryContainer} ${globalClasses[overlayClass]} ${globalClasses[overlayClassActive]}`}
+              key={c.id}
+              px="xs"
+              onClick={() => props.onCategorySelect(c.id)}
+            >
+              <Text>{c.name}</Text>
+            </Group>
+          );
+        })}
       </Flex>
     </>
   );
