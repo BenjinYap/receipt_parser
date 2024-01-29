@@ -1,12 +1,9 @@
 import {Box} from "@mantine/core";
 import classes from './TextBlockOverlay.module.css';
+import {ParsedExpense} from "../../Api/ReceiptApiInterface.ts";
 
 type TextBlockOverlayProps = {
-  left: number,
-  top: number,
-  width: number,
-  height: number,
-  text: string,
+  parsedExpense: ParsedExpense,
   canvasWidth: number,
   canvasHeight: number,
 };
@@ -17,10 +14,10 @@ const TextBlockOverlay = (props: TextBlockOverlayProps) => {
   return (
     <Box
       className={classes.textblockOverlay}
-      left={props.canvasWidth * props.left}
-      top={props.canvasHeight * props.top}
-      w={props.canvasWidth * props.width}
-      h={props.canvasHeight * props.height}
+      left={props.canvasWidth * props.parsedExpense.left}
+      top={props.canvasHeight * props.parsedExpense.top}
+      w={props.canvasWidth * props.parsedExpense.width}
+      h={props.canvasHeight * props.parsedExpense.height}
     >
 
     </Box>

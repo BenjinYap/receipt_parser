@@ -2,6 +2,7 @@ import {Box, Image, Paper} from "@mantine/core";
 import {useElementSize} from "@mantine/hooks";
 import {UploadedImage} from "./Receiptmajigger.tsx";
 import TextBlockOverlay from "./TextBlockOverlay.tsx";
+import {ParsedExpense} from "../../Api/ReceiptApiInterface.ts";
 
 type ImageViewerProps = {
   images: Array<UploadedImage>,
@@ -25,14 +26,10 @@ const ImageViewer = (props: ImageViewerProps) => {
             //feels wrong to revoke the url in this child component
             // onLoad={() => URL.revokeObjectURL(activeImage.previewUrl)}
           />
-          {activeImage.textractData?.blocks.map((a) => (
+          {activeImage.parsedExpenses.map((a: ParsedExpense) => (
             <TextBlockOverlay
               key={a.id}
-              left={a.left}
-              top={a.top}
-              width={a.width}
-              height={a.height}
-              text={a.text}
+              parsedExpense={a}
               canvasWidth={width}
               canvasHeight={height}
             />

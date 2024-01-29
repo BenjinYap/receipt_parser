@@ -6,6 +6,8 @@ import {Flex, Group, Stack} from "@mantine/core";
 import ImageThumbnailList from "./ImageThumbnailList.tsx";
 import BrushSelector from "./BrushSelector.tsx";
 import ExpenseSummary from "./ExpenseSummary.tsx";
+import {ParsedExpense, UploadReceiptSuccessResponse} from "../../Api/ReceiptApiInterface.ts";
+import {ErrorResponse} from "../../../../Global/Api/Api.ts";
 
 const receiptApi = new MockReceiptApi();
 
@@ -15,9 +17,27 @@ export type UploadedImage = {
   previewUrl: string,
   textracting: boolean,
   textractData: any,
+  parsedExpenses: Array<ParsedExpense>,
+};
+
+type ExpenseCategory = {
+  id: number,
+  name: string,
+};
+
+type TrackedExpense = {
+  categoryId: number,
+  expenseId: string,
 };
 
 const Receiptmajigger = () => {
+  const DEFAULT_EXPENSE_CATEGORIES = [
+    {id: 1, name: 'Snacks'},
+    {id: 2, name: 'Eating out'},
+    {id: 3, name: 'Groceries'},
+  ];
+
+  const [expenseCategories, expenseCategoriesHandler] = useListState<ExpenseCategory>(DEFAULT_EXPENSE_CATEGORIES);
   const [uploadedImages, uploadedImagesHandler] = useListState<UploadedImage>([]);
   const previousUploadedImages = usePrevious(uploadedImages);
 
@@ -45,14 +65,16 @@ const Receiptmajigger = () => {
         previewUrl: URL.createObjectURL(files[i]),
         textracting: true,
         textractData: undefined,
+        parsedExpenses: [],
       });
 
       //upload the image to the OCR api then save the resulting data
-      receiptApi.uploadReceipt(files[i]).then((resp) => {
+      receiptApi.uploadReceipt(files[i]).then((resp: UploadReceiptSuccessResponse | ErrorResponse) => {
         uploadedImagesHandler.setItemProp(i + currentImageCount, 'textracting', false);
 
         if (resp.success) {
           uploadedImagesHandler.setItemProp(i + currentImageCount, 'textractData', resp.data);
+          uploadedImagesHandler.setItemProp(i + currentImageCount, 'parsedExpenses', resp.data.blocks);
         }
       });
     }
