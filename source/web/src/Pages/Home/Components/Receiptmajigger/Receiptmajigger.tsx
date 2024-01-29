@@ -33,7 +33,7 @@ const Receiptmajigger = () => {
     {id: 3, name: 'Groceries', color: 'blue'},
   ];
 
-  const [activeExpenseCategoryId, setActiveExpenseCategoryId] = useState<number>(null);
+  const [activeExpenseCategoryId, setActiveExpenseCategoryId] = useState<number | null>(null);
   const [expenseCategories, expenseCategoriesHandler] = useListState<ExpenseCategory>(DEFAULT_EXPENSE_CATEGORIES);
   const [uploadedImages, uploadedImagesHandler] = useListState<UploadedImage>([]);
   const previousUploadedImages = usePrevious(uploadedImages);
@@ -70,6 +70,11 @@ const Receiptmajigger = () => {
   };
 
   const handleParsedExpenseSelect = (id: string) => {
+    //don't do anything if no brush is selected
+    if (activeExpenseCategoryId === null) {
+      return;
+    }
+
     //if already tracked, then remove
     if (id in trackedExpenses) {
       const copy = {...trackedExpenses};

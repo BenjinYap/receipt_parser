@@ -6,7 +6,7 @@ import globalClasses from '../../../../App.module.css';
 type BrushSelectorProps = {
   categories: Array<ExpenseCategory>,
   onCategorySelect: (id: number) => void,
-  activeCategoryId: number,
+  activeCategoryId: number | null,
 };
 
 const BrushSelector = (props: BrushSelectorProps) => {
