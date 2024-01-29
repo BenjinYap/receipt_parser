@@ -2,8 +2,10 @@ import ImageViewer from "./ImageViewer.tsx";
 import {useListState, usePrevious} from "@mantine/hooks";
 import {useEffect, useState} from "react";
 import MockReceiptApi from "../../Api/MockReceiptApi.ts";
-import {Flex, Group} from "@mantine/core";
+import {Flex, Group, Stack} from "@mantine/core";
 import ImageThumbnailList from "./ImageThumbnailList.tsx";
+import BrushSelector from "./BrushSelector.tsx";
+import ExpenseSummary from "./ExpenseSummary.tsx";
 
 const receiptApi = new MockReceiptApi();
 
@@ -94,6 +96,10 @@ const Receiptmajigger = () => {
           onDrop={handleDrop}
           onThumbnailClick={handleThumbnailClick}
         />
+        <Stack>
+          <BrushSelector/>
+          <ExpenseSummary/>
+        </Stack>
       </Flex>
     </>
   );
