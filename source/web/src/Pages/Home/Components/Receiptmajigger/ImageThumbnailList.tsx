@@ -50,8 +50,6 @@ const ImageThumbnailList = (props: ImageThumbnailListProps) => {
             style={{
               color: 'var(--mantine-color-dimmed)'
             }}
-            w={100}
-
           />
         </Group>
       </Dropzone>

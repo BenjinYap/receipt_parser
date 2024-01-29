@@ -1,0 +1,16 @@
+.paper {
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+  border-width: 3px !important;
+}
+
+.loader {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  margin: auto;
+  pointer-events: none;
+}

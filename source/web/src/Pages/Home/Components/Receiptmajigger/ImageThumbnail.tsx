@@ -1,5 +1,6 @@
 import {UploadedImage} from "./Receiptmajigger.tsx";
-import {Image, Paper} from "@mantine/core";
+import {Image, Loader, LoadingOverlay, Paper} from "@mantine/core";
+import classes from './ImageThumbnail.module.css';
 
 type ImageThumbnailProps = {
   isActive: boolean,
@@ -13,13 +14,21 @@ const ImageThumbnail = (props: ImageThumbnailProps) => {
     <Paper
       withBorder
       style={{
-        overflow: 'hidden',
-        borderColor: props.isActive ? 'var(--mantine-color-dark-1)' : 'var(--mantine-color-dark-4)',
+        borderColor: props.isActive ? 'var(--mantine-color-blue-outline)' : 'var(--mantine-color-dark-outline)',
       }}
       maw={props.maxSize}
       mah={props.maxSize}
       onClick={() => props.onClick(props.image.id)}
+      className={classes.paper}
     >
+      {props.image.textracting &&
+        <Loader
+          type="dots"
+          color="blue"
+          className={classes.loader}
+          pos="absolute"
+        />
+      }
       <Image
         src={props.image.previewUrl}
         //feels wrong to revoke the url in this child component
