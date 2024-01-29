@@ -2,6 +2,8 @@ import ImageViewer from "./ImageViewer.tsx";
 import {useListState, usePrevious} from "@mantine/hooks";
 import {useEffect, useState} from "react";
 import MockReceiptApi from "../../Api/MockReceiptApi.ts";
+import {Flex, Group} from "@mantine/core";
+import ImageThumbnailList from "./ImageThumbnailList.tsx";
 
 const receiptApi = new MockReceiptApi();
 
@@ -78,12 +80,21 @@ const Receiptmajigger = () => {
   return (
     <>
       <button onClick={() => console.log(uploadedImages)}>awd</button>
-      <ImageViewer
-        images={uploadedImages}
-        onDrop={handleDrop}
-        onDelete={() => console.log(1)}
-        onThumbnailClick={handleThumbnailClick}
-      />
+      <Flex
+        w="100%"
+        gap="md"
+        direction={{base: 'column', xs: 'row'}}
+      >
+        <ImageViewer
+          images={uploadedImages}
+          onDelete={() => console.log(1)}
+        />
+        <ImageThumbnailList
+          images={uploadedImages}
+          onDrop={handleDrop}
+          onThumbnailClick={handleThumbnailClick}
+        />
+      </Flex>
     </>
   );
 };

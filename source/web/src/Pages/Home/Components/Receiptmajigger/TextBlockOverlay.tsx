@@ -1,7 +1,6 @@
 import {Box} from "@mantine/core";
 import classes from './TextBlockOverlay.module.css';
 
-console.log(classes);
 type TextBlockOverlayProps = {
   left: number,
   top: number,
