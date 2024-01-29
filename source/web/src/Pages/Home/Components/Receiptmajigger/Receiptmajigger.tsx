@@ -46,6 +46,13 @@ const Receiptmajigger = () => {
   const [trackedExpenses, setTrackedExpenses] = useState<Record<string, number>>({});  //all tracked expenses across all images
 
 
+  const handleParsedExpenseSelect = (id: string) => {
+    setTrackedExpenses({
+      ...trackedExpenses,
+      [id]: activeExpenseCategoryId,
+    });
+  };
+
   const updateActiveImage = (activeIndex: number): void => {
     //set the currently active one to false and the new index to true
     //this should only result in 2 state calls which should be better than doing a one liner
@@ -120,6 +127,8 @@ const Receiptmajigger = () => {
         <ImageViewer
           images={uploadedImages}
           onDelete={() => console.log(1)}
+          onParsedExpenseSelect={(id: string) => handleParsedExpenseSelect(id)}
+          trackedExpenses={trackedExpenses}
         />
         <ImageThumbnailList
           images={uploadedImages}

@@ -1,4 +1,4 @@
-.overlayRed {
+.overlay1 {
   border-color: var(--mantine-color-red-outline);
 
   @mixin hover {
@@ -6,11 +6,11 @@
   }
 }
 
-.overlayRedActive {
+.overlay1Active {
   background: var(--mantine-color-red-filled);
 }
 
-.overlayGreen {
+.overlay2 {
   border-color: var(--mantine-color-green-outline);
 
   @mixin hover {
@@ -18,11 +18,11 @@
   }
 }
 
-.overlayGreenActive {
+.overlay2Active {
   background: var(--mantine-color-green-filled);
 }
 
-.overlayBlue {
+.overlay3 {
   border-color: var(--mantine-color-blue-outline);
 
   @mixin hover {
@@ -30,6 +30,6 @@
   }
 }
 
-.overlayBlueActive {
+.overlay3Active {
   background: var(--mantine-color-blue-filled);
 }

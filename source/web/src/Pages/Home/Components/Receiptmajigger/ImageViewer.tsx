@@ -7,6 +7,8 @@ import {ParsedExpense} from "../../Api/ReceiptApiInterface.ts";
 type ImageViewerProps = {
   images: Array<UploadedImage>,
   onDelete: () => void,
+  onParsedExpenseSelect: (id: string) => void,
+  trackedExpenses: Record<string, number>,
 };
 
 const ImageViewer = (props: ImageViewerProps) => {
@@ -32,6 +34,8 @@ const ImageViewer = (props: ImageViewerProps) => {
               parsedExpense={a}
               canvasWidth={width}
               canvasHeight={height}
+              onSelect={(id: string) => props.onParsedExpenseSelect(id)}
+              expenseCategoryId={props.trackedExpenses[a.id] ?? null}
             />
           ))}
         </Box>

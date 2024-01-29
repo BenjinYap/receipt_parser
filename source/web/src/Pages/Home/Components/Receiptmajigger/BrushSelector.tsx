@@ -17,9 +17,9 @@ const BrushSelector = (props: BrushSelectorProps) => {
         gap="xs"
       >
         {props.categories.map((c: ExpenseCategory) => {
-          //figure out the class names based on the category color
-          const overlayClass = `overlay${c.color.charAt(0).toUpperCase() + c.color.slice(1)}`;
-          const overlayClassActive = c.id === props.activeCategoryId ? `${overlayClass}Active` : '';
+          //figure out the class names based on the category color id
+          const overlayClass: string = `overlay${c.id}`;
+          const overlayClassActive: string = c.id === props.activeCategoryId ? `${overlayClass}Active` : '';
 
           return (
             <Group
