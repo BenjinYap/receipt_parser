@@ -8,6 +8,7 @@ import BrushSelector from "./BrushSelector.tsx";
 import ExpenseSummary, {ExpenseSummaryDataRow} from "./ExpenseSummary.tsx";
 import {ParsedExpense, UploadReceiptSuccessResponse} from "../../Api/ReceiptApiInterface.ts";
 import {ErrorResponse} from "../../../../Global/Api/Api.ts";
+import {notifications} from "@mantine/notifications";
 
 const receiptApi = new MockReceiptApi();
 
@@ -72,6 +73,10 @@ const Receiptmajigger = () => {
   const handleParsedExpenseSelect = (id: string) => {
     //don't do anything if no brush is selected
     if (activeExpenseCategoryId === null) {
+      notifications.show({
+        color: 'red',
+        message: 'Select a category brush before painting.',
+      });
       return;
     }
 

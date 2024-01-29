@@ -1,5 +1,5 @@
 import {UploadedImage} from "./Receiptmajigger.tsx";
-import {Image, Loader, LoadingOverlay, Paper} from "@mantine/core";
+import {Image, Loader, Paper} from "@mantine/core";
 import classes from './ImageThumbnail.module.css';
 
 type ImageThumbnailProps = {
