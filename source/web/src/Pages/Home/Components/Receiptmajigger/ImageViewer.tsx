@@ -17,11 +17,13 @@ const ImageViewer = (props: ImageViewerProps) => {
 
   return (
 
-    <Paper withBorder>
+    <Paper
+      withBorder
+      pos="relative"
+      maw={1000}
+    >
       {activeImage ? (
-        <Box
-          pos="relative"
-        >
+        <>
           <Image
             ref={ref}
             src={activeImage.previewUrl}
@@ -38,7 +40,7 @@ const ImageViewer = (props: ImageViewerProps) => {
               expenseCategoryId={props.trackedExpenses[a.id] ?? null}
             />
           ))}
-        </Box>
+        </>
       ) : (
         <h1>awd</h1>
       )}

@@ -57,7 +57,7 @@ const Receiptmajigger = () => {
         categorySummaryMap[category.name] = 0;
       }
 
-      categorySummaryMap[category.name] += Number(expense.text);
+      categorySummaryMap[category.name] += Number(expense.text.replace('$', ''));
     }
 
     const data: Array<ExpenseSummaryDataRow> = [];

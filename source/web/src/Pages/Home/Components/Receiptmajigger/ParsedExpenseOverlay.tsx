@@ -28,7 +28,7 @@ const ParsedExpenseOverlay = (props: ParsedExpenseOverlayProps) => {
 
   return (
     <Box
-      opacity={0.6}
+      opacity={0.4}
       className={`${classes.overlay} ${overlayClass} ${overlayClassActive}`}
       left={props.canvasWidth * props.parsedExpense.left}
       top={props.canvasHeight * props.parsedExpense.top}
