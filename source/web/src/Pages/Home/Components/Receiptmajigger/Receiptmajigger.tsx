@@ -1,5 +1,5 @@
 import ImageViewer from "./ImageViewer.tsx";
-import {useListState, usePrevious} from "@mantine/hooks";
+import {useDisclosure, useListState, usePrevious} from "@mantine/hooks";
 import {useEffect, useState} from "react";
 import MockReceiptApi from "../../Api/MockReceiptApi.ts";
 import {Flex, Stack} from "@mantine/core";
@@ -9,6 +9,7 @@ import ExpenseSummary, {ExpenseSummaryDataRow} from "./ExpenseSummary.tsx";
 import {ParsedExpense, UploadReceiptSuccessResponse} from "../../Api/ReceiptApiInterface.ts";
 import {ErrorResponse} from "../../../../Global/Api/Api.ts";
 import {notifications} from "@mantine/notifications";
+import TakePhotoModal from "./TakePhotoModal.tsx";
 
 const receiptApi = new MockReceiptApi();
 
@@ -34,6 +35,7 @@ const Receiptmajigger = () => {
     {id: 3, name: 'Groceries', color: 'blue'},
   ];
 
+  const [takePhotoModalOpen, takePhotoModalOpenHandlers] = useDisclosure(false);
   const [activeExpenseCategoryId, setActiveExpenseCategoryId] = useState<number | null>(null);
   const [expenseCategories, expenseCategoriesHandler] = useListState<ExpenseCategory>(DEFAULT_EXPENSE_CATEGORIES);
   const [uploadedImages, uploadedImagesHandler] = useListState<UploadedImage>([]);
@@ -154,6 +156,15 @@ const Receiptmajigger = () => {
     uploadedImagesHandler.append(...toAdd);
   };
 
+  const handleWebcamPhotoUpload = async (base64: string) => {
+    takePhotoModalOpenHandlers.close();
+    //fancy thing to convert the base64 into a File
+    const resp = await fetch(base64);
+    const resp2 = await resp.blob();
+    const file = new File([resp2], "File name", {type: "image/webp"});
+    handleDrop([file]);
+  };
+
   const handleThumbnailClick = (id: string) => {
     updateActiveImage(uploadedImages.findIndex((image: UploadedImage) => image.id === id));
   };
@@ -185,6 +196,7 @@ const Receiptmajigger = () => {
           images={uploadedImages}
           onDrop={handleDrop}
           onThumbnailClick={handleThumbnailClick}
+          onCameraClick={() => takePhotoModalOpenHandlers.open()}
         />
         <Stack>
           <BrushSelector
@@ -197,6 +209,13 @@ const Receiptmajigger = () => {
           />
         </Stack>
       </Flex>
+      {takePhotoModalOpen &&
+        <TakePhotoModal
+          opened={takePhotoModalOpen}
+          onClose={() => takePhotoModalOpenHandlers.close()}
+          onUpload={handleWebcamPhotoUpload}
+        />
+      }
     </>
   );
 };

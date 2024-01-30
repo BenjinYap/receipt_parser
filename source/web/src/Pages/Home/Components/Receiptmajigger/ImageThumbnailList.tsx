@@ -1,14 +1,15 @@
 import ImageThumbnail from "./ImageThumbnail.tsx";
 import {Dropzone, IMAGE_MIME_TYPE} from "@mantine/dropzone";
 import {Flex, Group} from "@mantine/core";
-import {IconPhotoPlus} from "@tabler/icons-react";
+import {IconCamera, IconPhotoPlus} from "@tabler/icons-react";
 import {UploadedImage} from "./Receiptmajigger.tsx";
-
+import classes from './ImageThumbnailList.module.css';
 
 type ImageThumbnailListProps = {
   images: Array<UploadedImage>,
   onDrop: (files: Array<File>) => void,
   onThumbnailClick: (id: string) => void,
+  onCameraClick: () => void,
 };
 
 const ImageThumbnailList = (props: ImageThumbnailListProps) => {
@@ -54,6 +55,20 @@ const ImageThumbnailList = (props: ImageThumbnailListProps) => {
           />
         </Group>
       </Dropzone>
+      <Group
+        w={MAX_SIZE}
+        h={MAX_SIZE}
+        justify="center"
+        align="center"
+        className={classes.webcam}
+        onClick={() => props.onCameraClick()}
+      >
+        <IconCamera
+          style={{
+            color: 'var(--mantine-color-dimmed)'
+          }}
+        />
+      </Group>
     </Flex>
   );
 }
