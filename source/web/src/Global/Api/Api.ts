@@ -1,9 +1,3 @@
-export type ErrorResponse = {
-  success: boolean,
-  code: string,
-  errorData: any,
-};
-
 export default class Api {
   public get() {
     return 123;

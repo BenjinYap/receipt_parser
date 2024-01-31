@@ -1,5 +1,7 @@
 import Api from "../../../Global/Api/Api.ts";
 import ReceiptApiInterface from "./ReceiptApiInterface.ts";
+import UploadReceiptSuccessResponse from "./UploadReceiptSuccessResponse.ts";
+import ApiErrorResponse from "../../../Global/Api/ApiErrorResponse.ts";
 
 export default class MockReceiptApi extends Api implements ReceiptApiInterface {
 
@@ -11,6 +13,13 @@ export default class MockReceiptApi extends Api implements ReceiptApiInterface {
       // this is to cancel out the default json content-type header
       headers: {},
     }, formData);
-    return resp.json();
+    const json = await resp.json();
+
+    if (json.success) {
+      return new UploadReceiptSuccessResponse(json.data);
+    } else {
+      return new ApiErrorResponse(json.code, json.errorData);
+    }
+
   }
 }

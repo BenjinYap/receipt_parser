@@ -9,13 +9,15 @@ type TakePhotoModalProps = {
 };
 
 const TakePhotoModal = (props: TakePhotoModalProps) => {
-  const ref = useRef(null);
+  const ref = useRef<Webcam>(null);
   const [imageSrc, setImageSrc] = useState<string | null>(null);
   const [streaming, setStreaming] = useState<boolean>(false);
 
   const capture = useCallback(() => {
-    setStreaming(false);
-    setImageSrc(ref.current?.getScreenshot());
+    if (ref.current) {
+      setStreaming(false);
+      setImageSrc(ref.current?.getScreenshot());
+    }
   }, [ref]);
 
   return (

@@ -6,10 +6,11 @@ import {Flex, Stack} from "@mantine/core";
 import ImageThumbnailList from "./ImageThumbnailList.tsx";
 import BrushSelector from "./BrushSelector.tsx";
 import ExpenseSummary, {ExpenseSummaryDataRow} from "./ExpenseSummary.tsx";
-import {ParsedExpense, UploadReceiptSuccessResponse} from "../../Api/ReceiptApiInterface.ts";
-import {ErrorResponse} from "../../../../Global/Api/Api.ts";
+import {ParsedExpense} from "../../Api/ReceiptApiInterface.ts";
 import {notifications} from "@mantine/notifications";
 import TakePhotoModal from "./TakePhotoModal.tsx";
+import UploadReceiptSuccessResponse from "../../Api/UploadReceiptSuccessResponse.ts";
+import ApiErrorResponse from "../../../../Global/Api/ApiErrorResponse.ts";
 
 const receiptApi = new MockReceiptApi();
 
@@ -42,6 +43,11 @@ const Receiptmajigger = () => {
   const previousUploadedImages = usePrevious(uploadedImages);
   const [parsedExpenses, parsedExpensesHandler] = useListState<ParsedExpense>([]);  //all parsed expenses across all images
   const [trackedExpenses, setTrackedExpenses] = useState<Record<string, number>>({});  //all tracked expenses across all images
+
+  //todo this is a stupid hack to stop typescript from complaining about expenseCategoriesHandler not being used
+  if (DEFAULT_EXPENSE_CATEGORIES.length === 1) {
+    console.log(expenseCategoriesHandler)
+  }
 
   const summarizeTrackedExpenses = (): Array<ExpenseSummaryDataRow> => {
     const categorySummaryMap: Record<number, { categoryName: string, amount: number }> = {};
@@ -133,10 +139,11 @@ const Receiptmajigger = () => {
       });
 
       //upload the image to the OCR api then save the resulting data
-      receiptApi.uploadReceipt(files[i]).then((resp: UploadReceiptSuccessResponse | ErrorResponse) => {
+      receiptApi.uploadReceipt(files[i]).then((resp: UploadReceiptSuccessResponse | ApiErrorResponse) => {
         uploadedImagesHandler.setItemProp(i + currentImageCount, 'textracting', false);
 
-        if (resp.success) {
+        if (resp instanceof UploadReceiptSuccessResponse) {
+          // const successResp: UploadReceiptSuccessResponse = resp as UploadReceiptSuccessResponse;
           //save the data to this image specifically
           uploadedImagesHandler.setItemProp(i + currentImageCount, 'textractData', resp.data);
           uploadedImagesHandler.setItemProp(i + currentImageCount, 'parsedExpenses', resp.data.blocks);

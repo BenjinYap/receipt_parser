@@ -1,4 +1,5 @@
-import {ErrorResponse} from "../../../Global/Api/Api.ts";
+import ApiErrorResponse from "../../../Global/Api/ApiErrorResponse.ts";
+import UploadReceiptSuccessResponse from "./UploadReceiptSuccessResponse.ts";
 
 export type ParsedExpense = {
   id: string,
@@ -9,13 +10,6 @@ export type ParsedExpense = {
   text: string,
 };
 
-export type UploadReceiptSuccessResponse = {
-  success: boolean,
-  data: {
-    blocks: Array<ParsedExpense>,
-  },
-};
-
 export default interface ReceiptApiInterface {
-  uploadReceipt: (file: File) => Promise<UploadReceiptSuccessResponse | ErrorResponse>;
+  uploadReceipt: (file: File) => Promise<UploadReceiptSuccessResponse | ApiErrorResponse>;
 }
