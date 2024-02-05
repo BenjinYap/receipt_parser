@@ -1,4 +1,4 @@
-import {Group, Image, LoadingOverlay, Paper, Text} from "@mantine/core";
+import {Image, LoadingOverlay, Paper, Stack, Text} from "@mantine/core";
 import {useElementSize} from "@mantine/hooks";
 import {UploadedImage} from "./Receiptmajigger.tsx";
 import ParsedExpenseOverlay from "./ParsedExpenseOverlay.tsx";
@@ -46,12 +46,15 @@ const ImageViewer = (props: ImageViewerProps) => {
           ))}
         </>
       ) : (
-        <Group
+        <Stack
           h="100%"
           p="xs"
+          justify="center"
+          ta="center"
         >
-          <Text>Upload an image of a receipt to get started</Text>
-        </Group>)}
+          <Text>Upload an image of a receipt to get started.</Text>
+          <Text>Only JPEG and PNG are currently supported.</Text>
+        </Stack>)}
     </Paper>
 
   );

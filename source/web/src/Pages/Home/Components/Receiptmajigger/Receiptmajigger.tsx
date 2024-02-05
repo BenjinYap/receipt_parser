@@ -168,7 +168,7 @@ const Receiptmajigger = () => {
     //fancy thing to convert the base64 into a File
     const resp = await fetch(base64);
     const resp2 = await resp.blob();
-    const file = new File([resp2], "File name", {type: "image/webp"});
+    const file = new File([resp2], "File name", {type: "image/png"});
     handleDrop([file]);
   };
 

@@ -44,6 +44,7 @@ const TakePhotoModal = (props: TakePhotoModalProps) => {
               width="100%"
               height={streaming ? 'auto' : 0}
               forceScreenshotSourceSize
+              screenshotFormat="image/png"
               onUserMedia={() => setStreaming(true)}
             />
             {!streaming &&
