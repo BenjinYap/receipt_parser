@@ -1,5 +1,5 @@
 import ImageThumbnail from "./ImageThumbnail.tsx";
-import {Dropzone, IMAGE_MIME_TYPE} from "@mantine/dropzone";
+import {Dropzone} from "@mantine/dropzone";
 import {Flex, Group} from "@mantine/core";
 import {IconCamera, IconPhotoPlus} from "@tabler/icons-react";
 import {UploadedImage} from "./Receiptmajigger.tsx";
@@ -39,7 +39,7 @@ const ImageThumbnailList = (props: ImageThumbnailListProps) => {
       <Dropzone
         onDrop={(files: Array<File>) => props.onDrop(files)}
         maxSize={5 * 1024 ** 2}
-        accept={IMAGE_MIME_TYPE}
+        accept={['image/jpeg', 'image/png']}
         p={0}
       >
         <Group
