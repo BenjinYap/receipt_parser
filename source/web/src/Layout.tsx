@@ -1,8 +1,11 @@
 import {AppShell, Box, Group, Text} from "@mantine/core";
 import {Outlet} from "react-router-dom";
 import {IconReceipt} from "@tabler/icons-react";
+import {useDocumentTitle} from "@mantine/hooks";
 
 const Layout = () => {
+  useDocumentTitle('Recept Parser');
+
   return (
     <AppShell
       header={{height: 60}}
