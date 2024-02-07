@@ -57,37 +57,22 @@ const buildErrorResponse = (code: string, errorData: object) => {
 };
 
 export const lambdaHandler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
-  // try {
-  //   return {
-  //     statusCode: 200,
-  //     body: JSON.stringify({
-  //       message: 'hello world boy',
-  //     }),
-  //   };
-  // } catch (err) {
-  //   console.log(err);
-  //   return {
-  //     statusCode: 500,
-  //     body: JSON.stringify({
-  //       message: 'some error happened',
-  //     }),
-  //   };
-  // }
-  // const client: TextractClient = new TextractClient({
-  //   region: 'us-east-1',
-  //   credentials: fromEnv(),
-  // });
-  return {
-    statusCode: 200,
-    body: JSON.stringify(event),
-  };
+  if (event.body === null) {
+    return {
+      statusCode: 500,
+      body: 'bad boy',
+    };
+  }
+
+  const base64 = JSON.parse(event.body).file ?? null;
+
   try {
     if (event.queryStringParameters?.mock) {
       const resp = JSON.parse(fs.readFileSync(path.resolve(__dirname, 'hello.txt'), 'utf-8'));
       const blocks = parseTextractResponse(resp);
       return buildSuccessResponse({blocks: blocks});
     } else {
-      if (req.file === undefined) {
+      if (base64 === null) {
         return buildErrorResponse('upload_failed', {});
       } else {
         const client: TextractClient = new TextractClient({
@@ -95,7 +80,7 @@ export const lambdaHandler = async (event: APIGatewayProxyEvent): Promise<APIGat
         });
         const input: AnalyzeDocumentRequest = { // AnalyzeDocumentRequest
           Document: { // Document
-            Bytes: req.file.buffer,
+            Bytes: Buffer.from(base64.substring(base64.indexOf(',') + 1), 'base64'),
           },
           FeatureTypes: [ // FeatureTypes // required
             "SIGNATURES",
@@ -105,10 +90,11 @@ export const lambdaHandler = async (event: APIGatewayProxyEvent): Promise<APIGat
         const resp: AnalyzeDocumentCommandOutput = await client.send(command);
         // fs.writeFileSync(path.resolve(__dirname, 'hello.txt'), JSON.stringify(resp));
         const blocks = parseTextractResponse(resp);
-        return buildSuccessResponse({blocks: blocks}));
+        return buildSuccessResponse({blocks: blocks});
       }
     }
   } catch (err) {
-    return {statusCode:500, body:JSON.stringify(err)};
+    console.log(err);
+    return {statusCode: 500, body: JSON.stringify(err)};
   }
 };

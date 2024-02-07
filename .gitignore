@@ -23,7 +23,7 @@ dist-ssr
 *.sln
 *.sw?
 
-.env
+_docker/.env
 hello.txt
 goodbye.txt
 Untitled.jpg

@@ -7,9 +7,9 @@ export default defineConfig({
   server: {
     proxy: {
       "/api": {
-        target: "http://express:3000",
+        target: "http://host.docker.internal:3000",
         changeOrigin: true,
-        // rewrite: (path) => path.replace(/^\/api/, '')
+        rewrite: (path) => path.replace(/^\/api/, '')
       },
     },
   },
