@@ -2,7 +2,7 @@ import {APIGatewayProxyEvent, APIGatewayProxyResult} from 'aws-lambda';
 import {
   AnalyzeDocumentCommand, AnalyzeDocumentCommandOutput,
   AnalyzeDocumentRequest,
-  AnalyzeDocumentResponse, Block,
+  Block,
   TextractClient
 } from "@aws-sdk/client-textract";
 import fs from "fs";
@@ -49,11 +49,27 @@ const parseTextractResponse = (resp: AnalyzeDocumentCommandOutput): Array<TextBl
 }
 
 const buildSuccessResponse = (data: object) => {
-  return {statusCode: 200, body: JSON.stringify(data)};
+  return {
+    statusCode: 200,
+    headers: {
+      "Access-Control-Allow-Headers": "Content-Type",
+      "Access-Control-Allow-Origin": "*", // Allow from anywhere
+      "Access-Control-Allow-Methods": "POST" // Allow only GET request
+    },
+    body: JSON.stringify(data)
+  };
 };
 
 const buildErrorResponse = (code: string, errorData: object) => {
-  return {statusCode: 400, code: code, body: JSON.stringify(errorData)};
+  return {
+    statusCode: 400, code: code,
+    headers: {
+      "Access-Control-Allow-Headers": "Content-Type",
+      "Access-Control-Allow-Origin": "*", // Allow from anywhere
+      "Access-Control-Allow-Methods": "POST" // Allow only GET request
+    },
+    body: JSON.stringify(errorData)
+  };
 };
 
 export const lambdaHandler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
