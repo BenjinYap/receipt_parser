@@ -1,4 +1,4 @@
-import {ParsedExpense} from "./ReceiptApiInterface.ts";
+import {ParsedExpense} from "./ReceiptApiInterface";
 
 type DataShape = {
   blocks: Array<ParsedExpense>,

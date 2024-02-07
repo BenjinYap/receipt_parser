@@ -1,16 +1,16 @@
-import ImageViewer from "./ImageViewer.tsx";
+import ImageViewer from "./ImageViewer";
 import {useDisclosure, useListState, usePrevious} from "@mantine/hooks";
 import {useEffect, useState} from "react";
-import MockReceiptApi from "../../Api/MockReceiptApi.ts";
+import MockReceiptApi from "../../Api/MockReceiptApi";
 import {Flex, Stack} from "@mantine/core";
-import ImageThumbnailList from "./ImageThumbnailList.tsx";
-import BrushSelector from "./BrushSelector.tsx";
-import ExpenseSummary, {ExpenseSummaryDataRow} from "./ExpenseSummary.tsx";
-import {ParsedExpense} from "../../Api/ReceiptApiInterface.ts";
+import ImageThumbnailList from "./ImageThumbnailList";
+import BrushSelector from "./BrushSelector";
+import ExpenseSummary, {ExpenseSummaryDataRow} from "./ExpenseSummary";
+import {ParsedExpense} from "../../Api/ReceiptApiInterface";
 import {notifications} from "@mantine/notifications";
-import TakePhotoModal from "./TakePhotoModal.tsx";
-import UploadReceiptSuccessResponse from "../../Api/UploadReceiptSuccessResponse.ts";
-import ApiErrorResponse from "../../../../Global/Api/ApiErrorResponse.ts";
+import TakePhotoModal from "./TakePhotoModal";
+import UploadReceiptSuccessResponse from "../../Api/UploadReceiptSuccessResponse";
+import ApiErrorResponse from "../../../../Global/Api/ApiErrorResponse";
 
 const receiptApi = new MockReceiptApi();
 
@@ -184,7 +184,7 @@ const Receiptmajigger = () => {
         //todo deal with deleting images later
       }
     }
-  }, [uploadedImages]);
+  }, [uploadedImages, previousUploadedImages, updateActiveImage]);
 
   return (
     <>

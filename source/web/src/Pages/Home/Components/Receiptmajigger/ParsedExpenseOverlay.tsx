@@ -1,6 +1,6 @@
 import {Box, HoverCard, Stack, Text} from "@mantine/core";
 import classes from './ParsedExpenseOverlay.module.css';
-import {ParsedExpense} from "../../Api/ReceiptApiInterface.ts";
+import {ParsedExpense} from "../../Api/ReceiptApiInterface";
 import globalClasses from '../../../../App.module.css';
 
 type ParsedExpenseOverlayProps = {
@@ -12,8 +12,8 @@ type ParsedExpenseOverlayProps = {
 };
 
 const ParsedExpenseOverlay = (props: ParsedExpenseOverlayProps) => {
-  let overlayClass: string = '';
-  let overlayClassActive: string = '';
+  let overlayClass: string;
+  let overlayClassActive: string;
 
   if (props.expenseCategoryId) {
     //figure out the class names based on the category color id

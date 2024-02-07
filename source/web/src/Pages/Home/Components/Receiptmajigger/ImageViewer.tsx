@@ -1,8 +1,8 @@
 import {Image, LoadingOverlay, Paper, Stack, Text} from "@mantine/core";
 import {useElementSize} from "@mantine/hooks";
-import {UploadedImage} from "./Receiptmajigger.tsx";
-import ParsedExpenseOverlay from "./ParsedExpenseOverlay.tsx";
-import {ParsedExpense} from "../../Api/ReceiptApiInterface.ts";
+import {UploadedImage} from "./Receiptmajigger";
+import ParsedExpenseOverlay from "./ParsedExpenseOverlay";
+import {ParsedExpense} from "../../Api/ReceiptApiInterface";
 
 type ImageViewerProps = {
   images: Array<UploadedImage>,

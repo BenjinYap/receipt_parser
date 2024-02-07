@@ -1,5 +1,6 @@
 import {Button, Checkbox, Divider, NumberInput, Paper, Stack, Table} from "@mantine/core";
-import {useState} from "react";
+import * as React from "react";
+import {useState} from 'react';
 import classes from './ExpenseSummary.module.css';
 import {useClipboard} from "@mantine/hooks";
 
@@ -58,7 +59,7 @@ const ExpenseSummary = (props: ExpenseSummaryProps) => {
       <Checkbox
         checked={includeTax}
         label="Include tax"
-        onChange={(event) => setIncludeText(event.currentTarget.checked)}
+        onChange={(event: React.ChangeEvent<HTMLInputElement>) => setIncludeText(event.currentTarget.checked)}
       />
       <NumberInput
         label="Tax %"

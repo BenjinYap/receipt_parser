@@ -9,13 +9,3 @@ services:
       - "5173:5173"
     extra_hosts:
       - "host.docker.internal:host-gateway"
-  #  express:
-  #    image: node:20-alpine
-  #    working_dir: /var/www/html
-  #    volumes:
-  #      - "../source/backend:/var/www/html"
-  #    command: npm run dev
-  #    ports:
-  #      - "3000:3000"
-  #    env_file:
-  #      - .env

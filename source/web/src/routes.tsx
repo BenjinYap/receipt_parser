@@ -1,6 +1,6 @@
 // import OrderLayout from "./pages/order/OrderLayout.tsx";
 // import Featured from "./pages/order/featured/Featured.tsx";
-import Layout from "./Layout.tsx";
+import Layout from "./Layout";
 import Home from "./Pages/Home/Home";
 
 const routes = [

@@ -1,7 +1,7 @@
-import Api from "../../../Global/Api/Api.ts";
-import ReceiptApiInterface from "./ReceiptApiInterface.ts";
-import UploadReceiptSuccessResponse from "./UploadReceiptSuccessResponse.ts";
-import ApiErrorResponse from "../../../Global/Api/ApiErrorResponse.ts";
+import Api from "../../../Global/Api/Api";
+import ReceiptApiInterface from "./ReceiptApiInterface";
+import UploadReceiptSuccessResponse from "./UploadReceiptSuccessResponse";
+import ApiErrorResponse from "../../../Global/Api/ApiErrorResponse";
 
 const API_HOST = import.meta.env.VITE_API_HOST;
 

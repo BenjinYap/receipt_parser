@@ -1,8 +1,8 @@
-import ImageThumbnail from "./ImageThumbnail.tsx";
+import ImageThumbnail from "./ImageThumbnail";
 import {Dropzone} from "@mantine/dropzone";
 import {Flex, Group} from "@mantine/core";
 import {IconCamera, IconPhotoPlus} from "@tabler/icons-react";
-import {UploadedImage} from "./Receiptmajigger.tsx";
+import {UploadedImage} from "./Receiptmajigger";
 import classes from './ImageThumbnailList.module.css';
 
 type ImageThumbnailListProps = {

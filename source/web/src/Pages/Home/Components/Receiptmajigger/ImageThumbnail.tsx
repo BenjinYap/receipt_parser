@@ -1,4 +1,4 @@
-import {UploadedImage} from "./Receiptmajigger.tsx";
+import {UploadedImage} from "./Receiptmajigger";
 import {Image, Loader, Paper} from "@mantine/core";
 import classes from './ImageThumbnail.module.css';
 

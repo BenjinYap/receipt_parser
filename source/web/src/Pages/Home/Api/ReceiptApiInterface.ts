@@ -1,5 +1,5 @@
-import ApiErrorResponse from "../../../Global/Api/ApiErrorResponse.ts";
-import UploadReceiptSuccessResponse from "./UploadReceiptSuccessResponse.ts";
+import ApiErrorResponse from "../../../Global/Api/ApiErrorResponse";
+import UploadReceiptSuccessResponse from "./UploadReceiptSuccessResponse";
 
 export type ParsedExpense = {
   id: string,
