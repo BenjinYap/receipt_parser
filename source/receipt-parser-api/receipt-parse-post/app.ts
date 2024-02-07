@@ -7,6 +7,7 @@ import {
 } from "@aws-sdk/client-textract";
 import fs from "fs";
 import path from "node:path";
+import {Logger} from "@aws-lambda-powertools/logger";
 
 type TextBlock = {
   id: string,
@@ -72,6 +73,8 @@ const buildErrorResponse = (code: string, errorData: object) => {
   };
 };
 
+const logger = new Logger();
+
 export const lambdaHandler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
   if (event.body === null) {
     return {
@@ -84,11 +87,14 @@ export const lambdaHandler = async (event: APIGatewayProxyEvent): Promise<APIGat
 
   try {
     if (event.queryStringParameters?.mock) {
-      const resp = JSON.parse(fs.readFileSync(path.resolve(__dirname, 'hello.txt'), 'utf-8'));
-      const blocks = parseTextractResponse(resp);
-      return buildSuccessResponse({blocks: blocks});
+      //todo local file now broken cause it's lambda instead of express
+      return buildSuccessResponse({blocks: []});
+      // const resp = JSON.parse(fs.readFileSync(path.resolve(__dirname, 'hello.txt'), 'utf-8'));
+      // const blocks = parseTextractResponse(resp);
+      // return buildSuccessResponse({blocks: blocks});
     } else {
       if (base64 === null) {
+        logger.info('upload_failed', {body: event.body});
         return buildErrorResponse('upload_failed', {});
       } else {
         const client: TextractClient = new TextractClient({
@@ -103,14 +109,16 @@ export const lambdaHandler = async (event: APIGatewayProxyEvent): Promise<APIGat
           ],
         };
         const command: AnalyzeDocumentCommand = new AnalyzeDocumentCommand(input);
+        logger.debug('analyzing_document');
         const resp: AnalyzeDocumentCommandOutput = await client.send(command);
         // fs.writeFileSync(path.resolve(__dirname, 'hello.txt'), JSON.stringify(resp));
         const blocks = parseTextractResponse(resp);
+        logger.info('document_analyzed', {blockCount: blocks.length});
         return buildSuccessResponse({blocks: blocks});
       }
     }
   } catch (err) {
-    console.log(err);
+    logger.error(JSON.stringify(err));
     return {statusCode: 500, body: JSON.stringify(err)};
   }
 };

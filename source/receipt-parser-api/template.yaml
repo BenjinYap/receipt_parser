@@ -37,6 +37,9 @@ Resources:
               Effect: Allow
               Action: textract:AnalyzeDocument
               Resource: "*"
+      LoggingConfig:
+        ApplicationLogLevel: 'DEBUG'
+        LogFormat: 'JSON'
 
     Metadata: # Manage esbuild properties
       BuildMethod: esbuild

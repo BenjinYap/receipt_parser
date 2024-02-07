@@ -8,3 +8,5 @@ way better logging
 add help/about section or something
 
 add iac and deploy pipeline
+
+fix the mock file loading for the lambda cause it doesn't work anymore
