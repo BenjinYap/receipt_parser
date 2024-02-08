@@ -46,6 +46,9 @@ const TakePhotoModal = (props: TakePhotoModalProps) => {
               forceScreenshotSourceSize
               screenshotFormat="image/png"
               onUserMedia={() => setStreaming(true)}
+              videoConstraints={{
+                facingMode: 'environment',
+              }}
             />
             {!streaming &&
               <Paper

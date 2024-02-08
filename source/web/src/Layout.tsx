@@ -1,14 +1,26 @@
-import {AppShell, Box, Group, Text} from "@mantine/core";
+import {ActionIcon, AppShell, Box, Group, Text} from "@mantine/core";
 import {Outlet} from "react-router-dom";
-import {IconReceipt} from "@tabler/icons-react";
-import {useDocumentTitle} from "@mantine/hooks";
+import {IconReceipt, IconHelp} from "@tabler/icons-react";
+import {useClickOutside, useDisclosure, useDocumentTitle} from "@mantine/hooks";
+import HowToUse from "./Global/Layout/HowToUse";
+import {useState} from "react";
 
 const Layout = () => {
   useDocumentTitle('Recept Parser');
 
+  const [helpButton, setHelpButton] = useState(null);
+  const [aside, setAside] = useState(null);
+  const [asideOpen, asideOpenHandlers] = useDisclosure(false);
+  useClickOutside(() => asideOpenHandlers.close(), null, [helpButton, aside]);
+
   return (
     <AppShell
       header={{height: 60}}
+      aside={{
+        width: 500,
+        breakpoint: 'xs',
+        collapsed: {desktop: !asideOpen, mobile: !asideOpen},
+      }}
     >
       <AppShell.Header>
         <Group
@@ -19,7 +31,17 @@ const Layout = () => {
           <Text
             size="xl"
             fw={700}
-          >Receipt Parser</Text>
+            flex="1"
+          >
+            Receipt Parser
+          </Text>
+          <ActionIcon
+            ref={setHelpButton}
+            variant="subtle"
+            onClick={() => asideOpenHandlers.toggle()}
+          >
+            <IconHelp/>
+          </ActionIcon>
         </Group>
       </AppShell.Header>
       <AppShell.Main>
@@ -29,6 +51,14 @@ const Layout = () => {
           <Outlet/>
         </Box>
       </AppShell.Main>
+      <AppShell.Aside>
+        <Box
+          ref={setAside}
+          p="xs"
+        >
+          <HowToUse/>
+        </Box>
+      </AppShell.Aside>
     </AppShell>
   );
 };
