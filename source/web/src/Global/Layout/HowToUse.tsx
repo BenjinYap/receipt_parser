@@ -36,6 +36,7 @@ const HowToUse = () => {
       <Title>How To Use</Title>
       {steps.map((a: Step) =>
         <Group
+          key={a.step}
           align="flex-start"
           wrap="no-wrap"
         >

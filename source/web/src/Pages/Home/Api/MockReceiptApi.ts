@@ -12,7 +12,7 @@ export default class MockReceiptApi extends Api implements ReceiptApiInterface {
       const reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onload = async () => {
-        const resp = await this.post(`${API_HOST}/api/receipt_parse?mock=1`, {}, JSON.stringify({file: reader.result}));
+        const resp = await this.post(`${API_HOST}/api/receipt_parse`, {}, JSON.stringify({file: reader.result}));
         const json = await resp.json();
 
         if (resp.status === 200) {

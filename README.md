@@ -16,3 +16,7 @@ change block overlay filtering to allow integer numbers only
 re-enable cloudfornt caching but auto invalidate /index.html on deploy or something
 
 add a changelogs feature
+
+add camera selection
+
+add brush customization
