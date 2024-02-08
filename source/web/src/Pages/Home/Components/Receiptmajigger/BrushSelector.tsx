@@ -1,7 +1,8 @@
-import {ExpenseCategory} from "./Receiptmajigger.tsx";
-import {Divider, Flex, Group, Stack, Text} from "@mantine/core";
+import {ExpenseCategory} from "./Receiptmajigger";
+import {ActionIcon, Divider, Flex, Group, Paper, rem, Stack, Text, Title} from "@mantine/core";
 import classes from './BrushSelector.module.css';
 import globalClasses from '../../../../App.module.css';
+import {IconSettings} from "@tabler/icons-react";
 
 type BrushSelectorProps = {
   categories: Array<ExpenseCategory>,
@@ -11,14 +12,20 @@ type BrushSelectorProps = {
 
 const BrushSelector = (props: BrushSelectorProps) => {
   return (
-    <>
-      <Stack
-        gap="xs"
-      >
-        <Divider
-          label="Category Brushes"
-          labelPosition="left"
-        />
+    <Paper
+      withBorder
+      p="xs"
+    >
+      <Stack gap="xs">
+        <Group justify="space-between">
+          <Title order={6}>Category Brushes</Title>
+          <ActionIcon
+            size="sm"
+          >
+            <IconSettings style={{width: rem(20), height: rem(20)}}/>
+          </ActionIcon>
+        </Group>
+        <Divider/>
         <Flex
           direction={{xs: 'column'}}
           gap="xs"
@@ -42,7 +49,7 @@ const BrushSelector = (props: BrushSelectorProps) => {
           })}
         </Flex>
       </Stack>
-    </>
+    </Paper>
   );
 }
 

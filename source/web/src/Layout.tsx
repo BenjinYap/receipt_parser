@@ -6,7 +6,7 @@ import HowToUse from "./Global/Layout/HowToUse";
 import {useState} from "react";
 
 const Layout = () => {
-  useDocumentTitle('Recept Parser');
+  useDocumentTitle('Receipt Parser');
 
   const [helpButton, setHelpButton] = useState(null);
   const [aside, setAside] = useState(null);
