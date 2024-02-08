@@ -79,6 +79,11 @@ const ExpenseSummary = (props: ExpenseSummaryProps) => {
             </Table.Tr>
           </Table.Thead>
           <Table.Tbody>
+            {finalData.length === 0 &&
+              <Table.Tr>
+                <Table.Td>No expenses tracked</Table.Td>
+              </Table.Tr>
+            }
             {finalData.map((a: ExpenseSummaryDataRow) => {
               return (
                 <Table.Tr

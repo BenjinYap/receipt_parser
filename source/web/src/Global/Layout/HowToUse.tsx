@@ -13,11 +13,11 @@ const HowToUse = () => {
     },
     {
       step: 2,
-      text: 'Wait for the image to be analyzed. Once analyzed, gray boxes will appear over numbers that can be painted.'
+      text: 'Wait for the image to be analyzed. Once analyzed, gray boxes will appear over expense-like numbers that can be painted.'
     },
     {
       step: 3,
-      text: 'Select appropriate category brushes and click on numbers to paint them as those categories.'
+      text: 'Select appropriate category brushes and click on expenses to paint them as those categories.'
     },
     {
       step: 4,
@@ -25,7 +25,7 @@ const HowToUse = () => {
     },
     {
       step: 5,
-      text: 'Once you have painted all the numbers you want, click Copy as CSV Text to copy the summary into your clipboard.'
+      text: 'Once you have painted all the expenses you want, click Copy as CSV Text to copy the summary into your clipboard.'
     },
   ];
 
