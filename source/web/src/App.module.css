@@ -33,3 +33,39 @@
 .overlay3Active {
   background: var(--mantine-color-blue-filled);
 }
+
+.overlay4 {
+  border-color: var(--mantine-color-grape-outline);
+
+  @mixin hover {
+    background: var(--mantine-color-grape-filled-hover);
+  }
+}
+
+.overlay4Active {
+  background: var(--mantine-color-grape-filled);
+}
+
+.overlay5 {
+  border-color: var(--mantine-color-yellow-outline);
+
+  @mixin hover {
+    background: var(--mantine-color-yellow-filled-hover);
+  }
+}
+
+.overlay5Active {
+  background: var(--mantine-color-yellow-filled);
+}
+
+.overlay6 {
+  border-color: var(--mantine-color-orange-outline);
+
+  @mixin hover {
+    background: var(--mantine-color-orange-filled-hover);
+  }
+}
+
+.overlay6Active {
+  background: var(--mantine-color-orange-filled);
+}

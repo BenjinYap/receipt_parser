@@ -21,6 +21,7 @@ const BrushSelector = (props: BrushSelectorProps) => {
           <Title order={6}>Category Brushes</Title>
           <ActionIcon
             size="sm"
+            disabled
           >
             <IconSettings style={{width: rem(20), height: rem(20)}}/>
           </ActionIcon>
