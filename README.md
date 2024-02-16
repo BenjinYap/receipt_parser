@@ -4,6 +4,7 @@ sam local start-api --host 0.0.0.0
 
 ## things to do/fix by priority
 * add a changelogs feature
+* make brushes fixed position when scrolling
 * add ability to delete photos (most likely to be used due to a bad photo causing text to be parsed poorly)
 * add missing colors for the summary table for all the new categories
 * keyboard shortcuts to cycle between the brushes would be nice
