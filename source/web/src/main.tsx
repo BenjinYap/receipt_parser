@@ -17,7 +17,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
       theme={theme}
       defaultColorScheme="dark"
     >
-      <Notifications/>
+      <Notifications limit={20}/>
       <App/>
     </MantineProvider>
   </React.StrictMode>,

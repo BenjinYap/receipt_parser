@@ -4,6 +4,7 @@ import classes from './BrushSelector.module.css';
 import globalClasses from '../../../../App.module.css';
 import {IconSettings} from "@tabler/icons-react";
 import {useHotkeys} from "@mantine/hooks";
+import {notifications} from "@mantine/notifications";
 
 type BrushSelectorProps = {
   categories: Array<ExpenseCategory>,
@@ -31,7 +32,16 @@ const BrushSelector = (props: BrushSelectorProps) => {
       }
     }
 
-    props.onCategorySelect(props.categories[activeCategoryIndex].id);
+    const activeCategory = props.categories[activeCategoryIndex];
+
+    //send a notification for the new selection
+    notifications.show({
+      color: activeCategory.color,
+      message: `Selected category brush: ${activeCategory.name}`,
+      autoClose: 1000,
+    });
+
+    props.onCategorySelect(activeCategory.id);
   };
 
   //hotkeys for changing brushes
