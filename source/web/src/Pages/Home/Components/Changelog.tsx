@@ -14,6 +14,8 @@ const Changelog = () => {
       items: [
         'Added a changelog.',
         'Added missing brush colors to summary table.',
+        'You can now use the , and . keys for cycling through category brushes.',
+        'You can now right click on an expense to clear its category.',
       ],
     },
   ];

@@ -8,6 +8,7 @@ type ImageViewerProps = {
   images: Array<UploadedImage>,
   onDelete: () => void,
   onParsedExpenseSelect: (id: string) => void,
+  onParsedExpenseClear: (id: string) => void,
   trackedExpenses: Record<string, number>,
 };
 
@@ -41,6 +42,7 @@ const ImageViewer = (props: ImageViewerProps) => {
               canvasWidth={width}
               canvasHeight={height}
               onSelect={(id: string) => props.onParsedExpenseSelect(id)}
+              onClear={(id: string) => props.onParsedExpenseClear(id)}
               expenseCategoryId={props.trackedExpenses[a.id] ?? null}
             />
           ))}

@@ -45,6 +45,7 @@ const Receiptmajigger = () => {
   const [uploadedImages, uploadedImagesHandler] = useListState<UploadedImage>([]);
   const previousUploadedImages = usePrevious(uploadedImages);
   const [parsedExpenses, parsedExpensesHandler] = useListState<ParsedExpense>([]);  //all parsed expenses across all images
+  //key is the string id for the overlay from textract, number is the assigned category id
   const [trackedExpenses, setTrackedExpenses] = useState<Record<string, number>>({});  //all tracked expenses across all images
 
   //todo this is a stupid hack to stop typescript from complaining about expenseCategoriesHandler not being used
@@ -112,6 +113,12 @@ const Receiptmajigger = () => {
         [id]: activeExpenseCategoryId,
       });
     }
+  };
+
+  const handleParsedExpenseClear = (id: string) => {
+    const copy = {...trackedExpenses};
+    delete copy[id];
+    setTrackedExpenses(copy);
   };
 
   const updateActiveImage = (activeIndex: number): void => {
@@ -200,6 +207,7 @@ const Receiptmajigger = () => {
           images={uploadedImages}
           onDelete={() => console.log(1)}
           onParsedExpenseSelect={(id: string) => handleParsedExpenseSelect(id)}
+          onParsedExpenseClear={(id: string) => handleParsedExpenseClear(id)}
           trackedExpenses={trackedExpenses}
         />
         <ImageThumbnailList

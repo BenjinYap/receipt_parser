@@ -8,6 +8,7 @@ type ParsedExpenseOverlayProps = {
   canvasWidth: number,
   canvasHeight: number,
   onSelect: (id: string) => void,
+  onClear: (id: string) => void,
   expenseCategoryId: number | null,
 };
 
@@ -47,6 +48,10 @@ const ParsedExpenseOverlay = (props: ParsedExpenseOverlayProps) => {
           w={props.canvasWidth * props.parsedExpense.width}
           h={props.canvasHeight * props.parsedExpense.height}
           onClick={() => props.onSelect(props.parsedExpense.id)}
+          onContextMenu={(e: MouseEvent) => {
+            e.preventDefault();
+            props.onClear(props.parsedExpense.id);
+          }}
         >
 
         </Box>
