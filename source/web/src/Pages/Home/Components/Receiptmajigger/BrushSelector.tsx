@@ -3,6 +3,7 @@ import {ActionIcon, Divider, Flex, Group, Paper, rem, Stack, Text, Title} from "
 import classes from './BrushSelector.module.css';
 import globalClasses from '../../../../App.module.css';
 import {IconSettings} from "@tabler/icons-react";
+import {useHotkeys} from "@mantine/hooks";
 
 type BrushSelectorProps = {
   categories: Array<ExpenseCategory>,
@@ -11,6 +12,34 @@ type BrushSelectorProps = {
 };
 
 const BrushSelector = (props: BrushSelectorProps) => {
+  const cycleActiveCategory = (forward: boolean) => {
+    let activeCategoryIndex = props.categories.findIndex((c: ExpenseCategory) => c.id === props.activeCategoryId);
+
+    if (forward) {
+      //no selection or at the end, then go back to beginning
+      if (activeCategoryIndex === -1 || activeCategoryIndex === props.categories.length - 1) {
+        activeCategoryIndex = 0;
+      } else {
+        activeCategoryIndex++;
+      }
+    } else {
+      //at the beginning, then go back to the end
+      if (activeCategoryIndex === 0) {
+        activeCategoryIndex = props.categories.length - 1;
+      } else {
+        activeCategoryIndex--;
+      }
+    }
+
+    props.onCategorySelect(props.categories[activeCategoryIndex].id);
+  };
+
+  //hotkeys for changing brushes
+  useHotkeys([
+    [',', () => cycleActiveCategory(false)],
+    ['.', () => cycleActiveCategory(true)],
+  ]);
+
   return (
     <Paper
       withBorder

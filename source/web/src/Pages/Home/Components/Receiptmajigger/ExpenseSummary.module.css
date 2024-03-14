@@ -3,9 +3,21 @@
 }
 
 .row2 {
-  background: var(--mantine-color-green-light) !important;;
+  background: var(--mantine-color-green-light) !important;
 }
 
 .row3 {
-  background: var(--mantine-color-blue-light) !important;;
+  background: var(--mantine-color-blue-light) !important;
+}
+
+.row4 {
+  background: var(--mantine-color-grape-light) !important;
+}
+
+.row5 {
+  background: var(--mantine-color-yellow-light) !important;
+}
+
+.row6 {
+  background: var(--mantine-color-orange-light) !important;
 }

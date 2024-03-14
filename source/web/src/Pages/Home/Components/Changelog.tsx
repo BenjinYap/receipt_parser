@@ -11,7 +11,10 @@ const Changelog = () => {
     {
       version: '1.0.1',
       date: '2024-03-14',
-      items: ['Added a changelog.'],
+      items: [
+        'Added a changelog.',
+        'Added missing brush colors to summary table.',
+      ],
     },
   ];
 
@@ -20,12 +23,15 @@ const Changelog = () => {
       <Title>Changelog</Title>
       <Divider/>
       {changes.map((o: Change) => (
-        <Stack gap="xs">
+        <Stack
+          key={o.version}
+          gap="xs"
+        >
           <Title order={2}>{o.version}</Title>
           <Text>{o.date}</Text>
           <List>
             {o.items.map((a: string) => (
-              <List.Item>{a}</List.Item>
+              <List.Item key={a}>{a}</List.Item>
             ))}
           </List>
           <Divider/>
