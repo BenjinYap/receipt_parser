@@ -20,7 +20,7 @@ const ImageViewer = (props: ImageViewerProps) => {
     <Paper
       withBorder
       pos="relative"
-      maw={1000}
+      flex={1}
     >
       {activeImage ? (
         <>

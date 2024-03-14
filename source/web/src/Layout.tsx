@@ -1,4 +1,4 @@
-import {ActionIcon, AppShell, Box, Group, Text} from "@mantine/core";
+import {ActionIcon, AppShell, Box, Container, Group, Text} from "@mantine/core";
 import {Outlet} from "react-router-dom";
 import {IconReceipt, IconHelp} from "@tabler/icons-react";
 import {useClickOutside, useDisclosure, useDocumentTitle} from "@mantine/hooks";
@@ -45,11 +45,11 @@ const Layout = () => {
         </Group>
       </AppShell.Header>
       <AppShell.Main>
-        <Box
+        <Container
           p="xs"
         >
           <Outlet/>
-        </Box>
+        </Container>
       </AppShell.Main>
       <AppShell.Aside>
         <Box
