@@ -69,3 +69,75 @@
 .overlay6Active {
   background: var(--mantine-color-orange-filled);
 }
+
+.overlay7 {
+  border-color: var(--mantine-color-pink-outline);
+
+  @mixin hover {
+    background: var(--mantine-color-pink-filled-hover);
+  }
+}
+
+.overlay7Active {
+  background: var(--mantine-color-pink-filled);
+}
+
+.overlay8 {
+  border-color: var(--mantine-color-violet-outline);
+
+  @mixin hover {
+    background: var(--mantine-color-violet-filled-hover);
+  }
+}
+
+.overlay8Active {
+  background: var(--mantine-color-violet-filled);
+}
+
+.overlay9 {
+  border-color: var(--mantine-color-indigo-outline);
+
+  @mixin hover {
+    background: var(--mantine-color-indigo-filled-hover);
+  }
+}
+
+.overlay9Active {
+  background: var(--mantine-color-indigo-filled);
+}
+
+.overlay10 {
+  border-color: var(--mantine-color-cyan-outline);
+
+  @mixin hover {
+    background: var(--mantine-color-cyan-filled-hover);
+  }
+}
+
+.overlay10Active {
+  background: var(--mantine-color-cyan-filled);
+}
+
+.overlay11 {
+  border-color: var(--mantine-color-teal-outline);
+
+  @mixin hover {
+    background: var(--mantine-color-teal-filled-hover);
+  }
+}
+
+.overlay11Active {
+  background: var(--mantine-color-teal-filled);
+}
+
+.overlay12 {
+  border-color: var(--mantine-color-lime-outline);
+
+  @mixin hover {
+    background: var(--mantine-color-lime-filled-hover);
+  }
+}
+
+.overlay12Active {
+  background: var(--mantine-color-lime-filled);
+}

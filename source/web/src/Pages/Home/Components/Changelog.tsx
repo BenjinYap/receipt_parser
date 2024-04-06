@@ -10,9 +10,10 @@ const Changelog = () => {
   const changes: Array<Change> = [
     {
       version: '1.0.2',
-      date: '2024-04-01',
+      date: '2024-04-06',
       items: [
         'You can now delete uploaded images.',
+        'Added more catgories.',
         'Fixed bug where summary table did not round to 2 decimals when not including taxes.',
       ],
     },

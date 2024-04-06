@@ -31,12 +31,18 @@ export type ExpenseCategory = {
 
 const Receiptmajigger = () => {
   const DEFAULT_EXPENSE_CATEGORIES = [
-    {id: 3, name: 'Groceries', color: 'blue'},
     {id: 2, name: 'Eating out', color: 'green'},
+    {id: 3, name: 'Groceries', color: 'blue'},
     {id: 1, name: 'Snacks', color: 'red'},
-    {id: 6, name: 'Drinks', color: 'orange'},
+    {id: 7, name: 'Drinks for home', color: 'pink'},
+    {id: 6, name: 'Drinks to go', color: 'orange'},
+    {id: 8, name: 'Coffee shop', color: 'violet'},
     {id: 4, name: 'Gifts', color: 'grape'},
     {id: 5, name: 'Cleaning Supplies', color: 'yellow'},
+    // {id: 9, name: 'Cleaning Supplies', color: 'indigo'},
+    // {id: 10, name: 'Cleaning Supplies', color: 'cyan'},
+    // {id: 11, name: 'Cleaning Supplies', color: 'teal'},
+    // {id: 12, name: 'Cleaning Supplies', color: 'lime'},
   ];
 
   const [takePhotoModalOpen, takePhotoModalOpenHandlers] = useDisclosure(false);
