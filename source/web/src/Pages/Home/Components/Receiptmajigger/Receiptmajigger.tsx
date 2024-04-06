@@ -75,7 +75,7 @@ const Receiptmajigger = () => {
 
       categorySummaryMap[category.id] = {
         ...categorySummaryMap[category.id],
-        amount: categorySummaryMap[category.id].amount + Number(expense.text.replace('$', '')),
+        amount: Number((categorySummaryMap[category.id].amount + Number(expense.text.replace('$', ''))).toFixed(2)),
       };
     }
 
@@ -186,12 +186,44 @@ const Receiptmajigger = () => {
     updateActiveImage(uploadedImages.findIndex((image: UploadedImage) => image.id === id));
   };
 
+  const handleThumbnailDeleteClick = (id: string) => {
+    const index: number = uploadedImages.findIndex((image: UploadedImage) => image.id === id);
+
+    //delete the image if it exists
+    if (index > -1) {
+      const image: UploadedImage = uploadedImages[index];
+      const imgExpenseIdMap: Record<string, boolean> = {};
+
+      //make a map of the image's expense ids so we can use it to delete it from the global list
+      for (const expense of image.parsedExpenses) {
+        imgExpenseIdMap[expense.id] = true;
+      }
+
+      const toRemove: Array<number> = [];
+
+      //find all the expenses that need to be removed from the global list
+      for (let i = 0; i < parsedExpenses.length; i++) {
+        if (parsedExpenses[i].id in imgExpenseIdMap) {
+          toRemove.push(i);
+        }
+      }
+
+      //remove the global expenses and the image itself
+      parsedExpensesHandler.remove(...toRemove);
+      uploadedImagesHandler.remove(index);
+    }
+  };
+
   useEffect(() => {
     if (previousUploadedImages) {
+      //if we added more images, make the latest one active
       if (uploadedImages.length > previousUploadedImages.length) {
         updateActiveImage(uploadedImages.length - 1);
       } else if (uploadedImages.length < previousUploadedImages.length) {
-        //todo deal with deleting images later
+        //if we removed images and the active one got removed, make the last one active
+        if (uploadedImages.find((a: UploadedImage) => a.isActive) === undefined) {
+          updateActiveImage(uploadedImages.length - 1);
+        }
       }
     }
   }, [uploadedImages, previousUploadedImages, updateActiveImage]);
@@ -215,6 +247,7 @@ const Receiptmajigger = () => {
           onDrop={handleDrop}
           onThumbnailClick={handleThumbnailClick}
           onCameraClick={() => takePhotoModalOpenHandlers.open()}
+          onThumbnailDeleteClick={handleThumbnailDeleteClick}
         />
         <Stack>
           <BrushSelector

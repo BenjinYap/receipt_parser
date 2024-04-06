@@ -1,7 +1,7 @@
 import ImageThumbnail from "./ImageThumbnail";
 import {Dropzone} from "@mantine/dropzone";
-import {Flex, Group} from "@mantine/core";
-import {IconCamera, IconPhotoPlus} from "@tabler/icons-react";
+import {ActionIcon, Box, Flex, Group} from "@mantine/core";
+import {IconCamera, IconPhotoPlus, IconX} from "@tabler/icons-react";
 import {UploadedImage} from "./Receiptmajigger";
 import classes from './ImageThumbnailList.module.css';
 
@@ -10,13 +10,13 @@ type ImageThumbnailListProps = {
   onDrop: (files: Array<File>) => void,
   onThumbnailClick: (id: string) => void,
   onCameraClick: () => void,
+  onThumbnailDeleteClick: (id: string) => void,
 };
 
 const ImageThumbnailList = (props: ImageThumbnailListProps) => {
   const activeImage: UploadedImage | undefined | null = props.images.find((a: UploadedImage) => a.isActive);
 
   const MAX_SIZE = 100;
-
 
   return (
     <Flex
@@ -28,13 +28,34 @@ const ImageThumbnailList = (props: ImageThumbnailListProps) => {
       style={{flexWrap: 'wrap'}}
     >
       {props.images.map((image: UploadedImage) => (
-        <ImageThumbnail
-          isActive={image === activeImage}
+        <Box
           key={image.id}
-          maxSize={MAX_SIZE}
-          image={image}
-          onClick={(id: string) => props.onThumbnailClick(id)}
-        />
+          pos="relative"
+        >
+          <ImageThumbnail
+            isActive={image === activeImage}
+            key={image.id}
+            maxSize={MAX_SIZE}
+            image={image}
+            onClick={(id: string) => props.onThumbnailClick(id)}
+          />
+          <ActionIcon
+            size="xs"
+            color="red"
+            pos="absolute"
+            top="calc(1px + 13px)"
+            left="calc(100% - 1px - 15px)"
+            style={{
+              transform: 'translate(-50%,-50%)',
+            }}
+            onClick={() => props.onThumbnailDeleteClick(image.id)}
+          >
+            <IconX style={{
+              width: '90%',
+              height: '90%'
+            }}/>
+          </ActionIcon>
+        </Box>
       ))}
       <Dropzone
         onDrop={(files: Array<File>) => props.onDrop(files)}

@@ -9,13 +9,21 @@ type Change = {
 const Changelog = () => {
   const changes: Array<Change> = [
     {
+      version: '1.0.2',
+      date: '2024-04-01',
+      items: [
+        'You can now delete uploaded images.',
+        'Fixed bug where summary table did not round to 2 decimals when not including taxes.',
+      ],
+    },
+    {
       version: '1.0.1',
       date: '2024-03-14',
       items: [
-        'Added a changelog.',
-        'Added missing brush colors to summary table.',
         'You can now use the , and . keys for cycling through category brushes.',
         'You can now right click on an expense to clear its category.',
+        'Added a changelog.',
+        'Added missing brush colors to summary table.',
       ],
     },
   ];
